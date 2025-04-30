@@ -1,13 +1,47 @@
+'use client'
 import OrderInput from "./components/inputComponent";
 import { Button } from "@heroui/button"
 import { CgClose } from "react-icons/cg";
 import { IoAdd } from "react-icons/io5";
 import { Input } from "@heroui/input";
+import OrdersList from "./components/ordersList";
 
 export default function Home() {
+  async function handleSubmit() {
+    const formElements = document.querySelectorAll('input, select, textarea');
+    const data: Record<string, string> = {};
+
+    formElements.forEach((el) => {
+      const element = el as HTMLInputElement;
+      if (element.id) {
+        data[element.id] = element.value;
+      }
+    });
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        alert('Pedido enviado com sucesso!');
+      } else {
+        alert('Erro ao enviar o pedido. Status: ' + res.status);
+      }
+    } catch (error) {
+      alert('Erro ao enviar o pedido: ' + error);
+    }
+
+  }
+
   return (
-    <section className="w-[100dvw] h-[100dvh] p-10 ">
-      <div className="flex flex-col items-center justify-center gap-2">
+    <section className="w-[100dvw] h-[100dvh] py-10 flex">
+      <div className="w-[33.3%] h-[100%] flex flex-col">
+        <OrdersList />
+      </div>
+      <div className="flex flex-col w-[33.3%] gap-2">
         <div className="w-[700px] h-[100px] flex gap-1">
           <div className="border-2 rounded-xl border-gray-600 relative w-[50%]"></div>
           <div className="grid grid-cols-2 gap-1 w-[50%]">
@@ -29,7 +63,7 @@ export default function Home() {
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
           <OrderInput name="CEP" width="w-[30%]" id="cep" />
-          <OrderInput name="CPF/CNPJ" width="w-[40%]" id="cpf/cnpj" />
+          <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" />
           <OrderInput name="IE" width="w-[30%]" id="ie" />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
@@ -38,7 +72,7 @@ export default function Home() {
           <OrderInput name="E-MAIL" width="w-[44%]" id="email" />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="DELIVERY ADDRRESS" width="w-full" id="deliveryAdress" />
+          <OrderInput name="DELIVERY ADDRRESS" width="w-full" id="deliveryAddress" />
         </div>
         <div className="w-[700px] h-auto flex flex-col border-2 border-gray-600 rounded-xl">
           <div className="w-full h-[40px] flex text-sm">
@@ -63,7 +97,7 @@ export default function Home() {
         </div>
         <div className="w-[700px] h-[50px] flex gap-1 justify-center">
           <Button className="w-[50px] min-w-2 h-[50px] border-gray-500" radius="full"><IoAdd color="white" className="w-[30px] h-[30px]" /></Button>
-          <Button className="w-[100px] h-[50px] border-gray-500 text-white" radius="full">Submit</Button>
+          <Button className="w-[100px] h-[50px] border-gray-500 text-white" radius="full" onPress={() => handleSubmit()}>Submit</Button>
           <Button className="w-[50px] min-w-2 h-[50px] bg-red-300 opacity-70" radius="full"><CgClose color="white" className="w-[30px] h-[30px]" /></Button>
         </div>
       </div>

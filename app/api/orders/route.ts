@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
@@ -34,13 +34,16 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json(order);
-  } catch (error) {
-    console.error('Error creating order:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
+  catch (error) {
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }
+
 export async function GET() {
   const orders = await prisma.order.findMany();
   return NextResponse.json(orders);
 }
-

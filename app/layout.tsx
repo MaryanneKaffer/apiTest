@@ -19,11 +19,14 @@ export default function RootLayout({
   return (
     <html suppressHydrationWarning lang="en">
       <head />
-      <body className={clsx("min-h-screen bg-background font-sans antialiased", fontSans.variable,)}>
+      <body
+        className={clsx(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+        )}
+      >
         <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
-          <main className="font-sans">
-            {children}
-          </main>
+          <main className="font-sans">{children}</main>
         </Providers>
       </body>
     </html>

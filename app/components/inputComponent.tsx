@@ -1,6 +1,9 @@
 "use client";
 import { Input } from "@heroui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Select, SelectItem } from "@heroui/select";
+import { Autocomplete, AutocompleteSection, AutocompleteItem } from "@heroui/autocomplete";
+import { input } from "@heroui/theme";
 
 interface InputProps {
   name?: string;
@@ -10,39 +13,52 @@ interface InputProps {
   fixedValue?: string;
   type?: string;
   noBorder?: boolean;
+  copyValue?: string;
 }
-export default function OrderInput({
-  name,
-  width,
-  id,
-  disabled,
-  fixedValue,
-  type,
-  noBorder,
-}: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, copyValue }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
   const fullDate = `${day}/${month}/${year}`;
-
+  const selectBox = id === "type" ? ["Order", "Budget"] : ["018", "049", "012"];
   const initialValue = name === "DATE" ? fullDate : fixedValue || "";
   const [inputValue, setInputValue] = useState(initialValue);
 
+  useEffect(() => {
+    if (copyValue !== undefined && copyValue !== inputValue) {
+      setInputValue(copyValue);
+    }
+  }, [copyValue, fixedValue]);
+
   return (
     <>
+      {type === "autoComplete" && (
+        <Autocomplete onSelectionChange={(value) => setInputValue(value as string)} className={`h-[38px] ${width}`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0', }} >
+          {selectBox.map((value) => (
+            <AutocompleteItem hideSelectedIcon key={value}>{value}</AutocompleteItem>
+          ))}
+        </Autocomplete>
+      )}
+      <input type="hidden" id={id} value={inputValue} />
       {type === "select" && (
-        <div
-          className={`border-2 rounded-xl border-gray-600 relative h-[47px] ${width}`}
-        >
+        <>
           <p className="absolute -top-2 bg-white px-2 left-3 text-[12px] z-10">
             {name}
           </p>
-          <select id={id} className="w-full h-[38px] border-none rounded-xl">
-            <option>Type 1</option>
-            <option>Type 2</option>
-          </select>
-        </div>
+          <Select id={id} defaultSelectedKeys={selectBox} onSelectionChange={(keys) => setInputValue(Array.from(keys)[0].toString())} className={`w-full place-self-center ${width}`} classNames={{
+            innerWrapper: "border-none",
+            trigger: `border-2 border-gray-600 rounded-xl h-[47px] ${width}`,
+          }}
+            variant="bordered"
+            radius="lg"
+            size="lg">
+            {selectBox.map((value) => (
+              <SelectItem key={value}>{value}</SelectItem>
+            ))}
+          </Select>
+          <input type="hidden" id={id} value={inputValue} />
+        </>
       )}
       {!type && (
         <div className={`relative ${width}`}>

@@ -6,16 +6,15 @@ import { LuCopy } from "react-icons/lu";
 import { GrFormView } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import InfoModal from "./infoModal";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
 
-export default function OrdersList({
-    onCopy,
-}: {
-    onCopy: (order: any) => void;
-}) {
+export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) => void; onDelete: (order: any) => void; }) {
     const [orders, setOrders] = useState<any[]>([]);
     const [hoverIndex, setHoverIndex] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
+    const [confirmation, setConfirmation] = useState(false);
+    const [orderId, setOrderId] = useState<number | null>(null);
 
     const openInfoModal = (order: any) => {
         setSelectedOrder(order);
@@ -26,14 +25,15 @@ export default function OrdersList({
         async function fetchOrders() {
             const res = await fetch("/api/orders");
             const data = await res.json();
-            setOrders(data);
+            setOrders(Array.isArray(data) ? data : []);
         }
         fetchOrders();
     }, []);
 
+
     return (
         <>
-            <div className="w-[100%] h-[100%] flex flex-col gap-2">
+            <div className="w-[80%] flex flex-col gap-2">
                 {orders.map((order, index) => (
                     <Card
                         key={order.id}
@@ -70,6 +70,7 @@ export default function OrdersList({
                                             className="w-[40px] min-w-2 h-[40px] bg-red-300 p-0"
                                             variant="flat"
                                             radius="full"
+                                            onPress={() => { setConfirmation(true); setSelectedOrder(order); setOrderId(order.id); }}
                                         >
                                             <MdDeleteOutline color="white" size={20} />
                                         </Button>
@@ -79,7 +80,30 @@ export default function OrdersList({
                         </CardBody>
                     </Card>
                 ))}
-            </div>
+            </div >
+            <Modal hideCloseButton isOpen={confirmation} onOpenChange={() => setConfirmation(false)} backdrop="blur" size="lg">
+                <ModalContent>
+                    {(onClose: any) => (
+                        <>
+                            <ModalHeader className="mt-2 text-center self-center text-xl flex flex-col gap-2">
+                                <p>Are you sure you want to delete this order?</p>
+                                <p>Order Id: {orderId}</p>
+                            </ModalHeader>
+                            <ModalBody className="text-black text-center">
+                                <p>This action cannot be undone.</p>
+                            </ModalBody>
+                            <ModalFooter className="flex justify-center gap-2">
+                                <Button variant="flat" onPress={onClose} className="bg-gray-300">
+                                    Cancel
+                                </Button>
+                                <Button color="danger" variant="flat" onPress={() => onDelete(selectedOrder)}>
+                                    Delete
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
             <InfoModal
                 order={selectedOrder}
                 isOpen={modalOpen}

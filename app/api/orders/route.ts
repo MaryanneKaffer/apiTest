@@ -1,7 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-const prisma = new PrismaClient();
+// Use PrismaClient as a singleton to prevent too many connections
+const globalForPrisma = global as unknown as { prisma: PrismaClient };
+
+const prisma = globalForPrisma.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,6 +14,7 @@ export async function POST(req: NextRequest) {
 
     const order = await prisma.order.create({
       data: {
+        id: body.id,
         date: body.date,
         type: body.type,
         contact: body.contact,
@@ -36,14 +42,39 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(order);
   }
   catch (error) {
+    console.error("POST error:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: "Internal Server Error", details: error instanceof Error ? error.message : String(error) },
       { status: 500 },
     );
   }
 }
 
 export async function GET() {
-  const orders = await prisma.order.findMany();
-  return NextResponse.json(orders);
+  try {
+    const orders = await prisma.order.findMany();
+    return NextResponse.json(orders);
+  } catch (error) {
+    console.error("GET error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch orders", details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { id } = await req.json();
+    const order = await prisma.order.delete({
+      where: { id },
+    });
+    return NextResponse.json(order);
+  } catch (error) {
+    console.error("DELETE error:", error);
+    return NextResponse.json(
+      { error: "Delete failed", details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    );
+  }
 }

@@ -9,7 +9,6 @@ import { useState } from "react";
 
 interface OrderFormData {
   id?: number;
-  date?: string;
   type?: string;
   contact?: string;
   corporateName?: string;
@@ -93,14 +92,14 @@ export default function Home() {
 
   return (
     <section className="w-[100dvw] h-[100dvh] py-10 flex overflow-hidden">
-      <div className="w-[28%] max-h-full h-full flex flex-col overflow-y-auto">
+      <div className="w-[28%] max-h-full h-full flex flex-col overflow-y-auto scrollbar-none">
         <OrdersList onCopy={handleCopy} onDelete={handleDelete} />
       </div>
       <div className="flex flex-col gap-2 absolute left-[31.7dvw]">
         <div className="w-[700px] h-[100px] flex gap-1">
           <div className="border-2 rounded-xl border-gray-600 relative w-[50%]"></div>
           <div className="grid grid-cols-2 gap-1 w-[50%]">
-            <OrderInput name="DATE" width="w-[100%]" id="date" disabled={true} copyValue={formData.date} />
+            <OrderInput name="DATE" width="w-[100%]" id="date" disabled={true} />
             <OrderInput width="w-[100%]" id="type" type={"select"} copyValue={formData.type} />
             <OrderInput width="w-[100%]" id="contact" disabled={true} fixedValue="" copyValue={formData.contact} />
             <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]"></div>

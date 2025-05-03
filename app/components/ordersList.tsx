@@ -7,6 +7,8 @@ import { GrFormView } from "react-icons/gr";
 import { MdDeleteOutline } from "react-icons/md";
 import InfoModal from "./infoModal";
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
+import { Input } from "@heroui/input";
+import SearchIcon from "./searchIcon";
 
 export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) => void; onDelete: (order: any) => void; }) {
     const [orders, setOrders] = useState<any[]>([]);
@@ -33,7 +35,37 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
 
     return (
         <>
-            <div className="w-[80%] flex flex-col gap-2">
+            <Input
+                className="w-[500px] mx-3 fixed top-10 z-10"
+                isClearable
+                classNames={{
+                    label: "text-black/50 dark:text-white/90",
+                    input: [
+                        "bg-transparent",
+                        "text-black/90 dark:text-white/90",
+                        "placeholder:text-default-700/50 dark:placeholder:text-white/60",
+                    ],
+                    innerWrapper: "bg-transparent",
+                    inputWrapper: [
+                        "shadow-xl",
+                        "bg-default-200/50",
+                        "dark:bg-default/60",
+                        "backdrop-blur-xl",
+                        "backdrop-saturate-200",
+                        "hover:bg-default-200/70",
+                        "dark:hover:bg-default/70",
+                        "group-data-[focus=true]:bg-default-200/50",
+                        "dark:group-data-[focus=true]:bg-default/60",
+                        "!cursor-text",
+                    ],
+                }}
+                placeholder="Type to search..."
+                radius="lg"
+                startContent={
+                    <SearchIcon />
+                }
+            />
+            <div className="w-[80%] flex flex-col gap-2 mt-12">
                 {orders.map((order, index) => (
                     <Card
                         key={order.id}
@@ -84,31 +116,25 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
             <Modal hideCloseButton isOpen={confirmation} onOpenChange={() => setConfirmation(false)} backdrop="blur" size="lg">
                 <ModalContent>
                     {(onClose: any) => (
-                        <>
-                            <ModalHeader className="mt-2 text-center self-center text-xl flex flex-col gap-2">
-                                <p>Are you sure you want to delete this order?</p>
-                                <p>Order Id: {orderId}</p>
-                            </ModalHeader>
-                            <ModalBody className="text-black text-center">
-                                <p>This action cannot be undone.</p>
-                            </ModalBody>
-                            <ModalFooter className="flex justify-center gap-2">
-                                <Button variant="flat" onPress={onClose} className="bg-gray-300">
-                                    Cancel
-                                </Button>
-                                <Button color="danger" variant="flat" onPress={() => onDelete(selectedOrder)}>
-                                    Delete
-                                </Button>
-                            </ModalFooter>
-                        </>
+                        <><ModalHeader className="mt-2 text-center self-center text-xl flex flex-col gap-2">
+                            <p>Are you sure you want to delete this order?</p>
+                            <p>Order Id: {orderId}</p>
+                        </ModalHeader>
+                        <ModalBody className="text-black text-center">
+                            <p>This action cannot be undone.</p>
+                        </ModalBody>
+                        <ModalFooter className="flex justify-center gap-2">
+                            <Button variant="flat" onPress={onClose} className="bg-gray-300">
+                                Cancel
+                            </Button>
+                            <Button color="danger" variant="flat" onPress={() => onDelete(selectedOrder)}>
+                                Delete
+                            </Button>
+                        </ModalFooter></>
                     )}
                 </ModalContent>
             </Modal>
-            <InfoModal
-                order={selectedOrder}
-                isOpen={modalOpen}
-                onOpenChange={setModalOpen}
-            />
+            <InfoModal order={selectedOrder} isOpen={modalOpen} onOpenChange={setModalOpen} />
         </>
     );
 }

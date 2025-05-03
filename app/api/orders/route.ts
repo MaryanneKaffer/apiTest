@@ -42,7 +42,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(order);
   }
   catch (error) {
-    console.error("POST error:", error);
     return NextResponse.json(
       { error: "Internal Server Error", details: error instanceof Error ? error.message : String(error) },
       { status: 500 },
@@ -55,7 +54,6 @@ export async function GET() {
     const orders = await prisma.order.findMany();
     return NextResponse.json(orders);
   } catch (error) {
-    console.error("GET error:", error);
     return NextResponse.json(
       { error: "Failed to fetch orders", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
@@ -71,7 +69,6 @@ export async function DELETE(req: NextRequest) {
     });
     return NextResponse.json(order);
   } catch (error) {
-    console.error("DELETE error:", error);
     return NextResponse.json(
       { error: "Delete failed", details: error instanceof Error ? error.message : String(error) },
       { status: 500 }

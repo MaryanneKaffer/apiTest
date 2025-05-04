@@ -33,7 +33,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
   return (
     <>
       {type === "autoComplete" && (
-        <Autocomplete selectedKey={inputValue} onSelectionChange={(value) => setInputValue(value as string)} className={`h-[38px] ${width}`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0', }} >
+        <Autocomplete selectedKey={inputValue} maxLength={3} onKeyDown={(e) => { if (!/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); } }} onSelectionChange={(value) => setInputValue(value as string)} className={`h-[38px] ${width}`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0', }} >
           {selectBox.map((value) => (
             <AutocompleteItem hideSelectedIcon key={value}>{value}</AutocompleteItem>
           ))}
@@ -57,10 +57,17 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
           <input type="hidden" id={id} value={inputValue} />
         </>
       )}
-      {!type && (
+      {(type === "text" || type === "number" || !type) && (
         <div className={`relative ${width}`}>
           {name && (<p className="absolute -top-[6px] rounded-xl h-[12px] left-3 z-10 px-2 bg-white text-black text-[12px]">{name}</p>)}
           <Input
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+              if (type === "text" && /\d/.test(e.key)) {
+                e.preventDefault();
+              } else if (type === "number" && !/\d/.test(e.key)) {
+                e.preventDefault();
+              }
+            }}
             variant="bordered"
             radius="lg"
             size="lg"
@@ -75,24 +82,27 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
               input: "text-black bg-transparent",
             }}
           ></Input>
-        </div>
-      )}
-      {type === "description" && (
-        <Input
-          size="md"
-          id={id}
-          placeholder="-"
-          disabled={disabled}
-          radius="none"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
-          classNames={{
-            inputWrapper:
-              "bg-transparent p-[5px] data-[hover=true]:bg-transparent",
-          }}
-        />
-      )}
+        </div >
+      )
+      }
+      {
+        type === "description" && (
+          <Input
+            size="md"
+            id={id}
+            placeholder="-"
+            disabled={disabled}
+            radius="none"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
+            classNames={{
+              inputWrapper:
+                "bg-transparent p-[5px] data-[hover=true]:bg-transparent",
+            }}
+          />
+        )
+      }
     </>
   );
 }

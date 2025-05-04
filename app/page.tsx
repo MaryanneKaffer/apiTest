@@ -106,22 +106,22 @@ export default function Home() {
           </div>
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="CORPORATE NAME" width="w-[68%]" id="corporateName" copyValue={formData.corporateName} />
-          <OrderInput name="PHONE" width="w-[32%]" id="phone" copyValue={formData.phone} />
+          <OrderInput name="CORPORATE NAME" width="w-[68%]" id="corporateName" type="text" copyValue={formData.corporateName} />
+          <OrderInput name="PHONE" width="w-[32%]" id="phone" type="number" copyValue={formData.phone} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
           <OrderInput name="ADDRESS" width="w-[60%]" id="address" copyValue={formData.address} />
-          <OrderInput name="CITY" width="w-[30%]" id="city" copyValue={formData.city} />
-          <OrderInput name="UF" width="w-[10%]" id="state" copyValue={formData.state} />
+          <OrderInput name="CITY" width="w-[30%]" id="city" type="text" copyValue={formData.city} />
+          <OrderInput name="UF" width="w-[10%]" id="state" type="text" copyValue={formData.state} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="CEP" width="w-[30%]" id="cep" copyValue={formData.cep} />
-          <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" copyValue={formData.cpfCnpj} />
-          <OrderInput name="IE" width="w-[30%]" id="ie" copyValue={formData.ie} />
-        </div>
+          <OrderInput name="CEP" width="w-[30%]" id="cep" type="number" copyValue={formData.cep} />
+          <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" type="number" copyValue={formData.cpfCnpj} />
+          <OrderInput name="IE" width="w-[30%]" id="ie" type="number" copyValue={formData.ie} />
+        </div> 
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="DISTRICT" width="w-[28%]" id="district" copyValue={formData.district} />
-          <OrderInput name="PAYMENT" width="w-[28%]" id="payment" copyValue={formData.payment} />
+          <OrderInput name="DISTRICT" width="w-[28%]" id="district" type="text" copyValue={formData.district} />
+          <OrderInput name="PAYMENT" width="w-[28%]" id="payment" type="text" copyValue={formData.payment} />
           <OrderInput name="E-MAIL" width="w-[44%]" id="email" copyValue={formData.email} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">

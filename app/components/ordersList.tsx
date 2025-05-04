@@ -17,6 +17,7 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
     const [selectedOrder, setSelectedOrder] = useState<any | null>(null);
     const [confirmation, setConfirmation] = useState(false);
     const [orderId, setOrderId] = useState<number | null>(null);
+    const [searchTerm, setSearchTerm] = useState("");
 
     const openInfoModal = (order: any) => {
         setSelectedOrder(order);
@@ -64,55 +65,55 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
                 startContent={
                     <SearchIcon />
                 }
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onClear={() => setSearchTerm("")}
             />
             <div className="w-[80%] flex flex-col gap-2 mt-12">
-                {orders.map((order, index) => (
-                    <Card
-                        key={order.id}
-                        className="mx-2 w-[500px] hover:scale-105"
-                        onMouseEnter={() => setHoverIndex(index as any)}
-                        onMouseLeave={() => setHoverIndex(null)}
-                    >
-                        <CardBody>
-                            <div className="flex gap-2 place-items-center">
-                                <IoBagHandleOutline size={42} />
-                                <div className="flex flex-col">
-                                    <p>{order.corporateName}</p>
-                                    <p className="text-gray-500 text-sm">
-                                        {order.size} - {order.qnt} - R${order.total}
-                                    </p>
-                                </div>
-                                {hoverIndex === index && (
-                                    <>
-                                        <Button
-                                            className="w-[40px] min-w-2 h-[40px] ml-auto p-0"
-                                            radius="full"
-                                            onPress={() => openInfoModal(order)}
-                                        >
-                                            <GrFormView color="white" size={30} />
-                                        </Button>
-                                        <Button
-                                            className="w-[40px] min-w-2 h-[40px] p-0"
-                                            radius="full"
-                                            onPress={() => onCopy(order)}
-                                        >
-                                            <LuCopy color="white" size={20} />
-                                        </Button>
-                                        <Button
-                                            className="w-[40px] min-w-2 h-[40px] bg-red-300 p-0"
-                                            variant="flat"
-                                            radius="full"
-                                            onPress={() => { setConfirmation(true); setSelectedOrder(order); setOrderId(order.id); }}
-                                        >
-                                            <MdDeleteOutline color="white" size={20} />
-                                        </Button>
-                                    </>
-                                )}
+                {(searchTerm ? orders.filter((order: { corporateName?: string, cpfCnpj: string, id: number }) => (order.corporateName + order.cpfCnpj + order.id.toString()).toLowerCase().includes(searchTerm.toLowerCase())) : orders).map((order, index) => (<Card
+                    key={order.id}
+                    className="mx-2 w-[500px] hover:scale-105"
+                    onMouseEnter={() => setHoverIndex(index as any)}
+                    onMouseLeave={() => setHoverIndex(null)}
+                >
+                    <CardBody>
+                        <div className="flex gap-2 place-items-center">
+                            <IoBagHandleOutline size={42} />
+                            <div className="flex flex-col">
+                                <p>{order.corporateName}</p>
+                                <p className="text-gray-500 text-sm">
+                                    {order.size} - {order.qnt} - R${order.total}
+                                </p>
                             </div>
-                        </CardBody>
-                    </Card>
-                ))}
-            </div >
+                            {hoverIndex === index && (
+                                <>
+                                    <Button
+                                        className="w-[40px] min-w-2 h-[40px] ml-auto p-0"
+                                        radius="full"
+                                        onPress={() => openInfoModal(order)}
+                                    >
+                                        <GrFormView color="white" size={30} />
+                                    </Button>
+                                    <Button
+                                        className="w-[40px] min-w-2 h-[40px] p-0"
+                                        radius="full"
+                                        onPress={() => onCopy(order)}
+                                    >
+                                        <LuCopy color="white" size={20} />
+                                    </Button>
+                                    <Button
+                                        className="w-[40px] min-w-2 h-[40px] bg-red-300 p-0"
+                                        variant="flat"
+                                        radius="full"
+                                        onPress={() => { setConfirmation(true); setSelectedOrder(order); setOrderId(order.id); }}
+                                    >
+                                        <MdDeleteOutline color="white" size={20} />
+                                    </Button>
+                                </>
+                            )}
+                        </div>
+                    </CardBody>
+                </Card>
+                ))}            </div >
             <Modal hideCloseButton isOpen={confirmation} onOpenChange={() => setConfirmation(false)} backdrop="blur" size="lg">
                 <ModalContent>
                     {(onClose: any) => (
@@ -120,17 +121,17 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
                             <p>Are you sure you want to delete this order?</p>
                             <p>Order Id: {orderId}</p>
                         </ModalHeader>
-                        <ModalBody className="text-black text-center">
-                            <p>This action cannot be undone.</p>
-                        </ModalBody>
-                        <ModalFooter className="flex justify-center gap-2">
-                            <Button variant="flat" onPress={onClose} className="bg-gray-300">
-                                Cancel
-                            </Button>
-                            <Button color="danger" variant="flat" onPress={() => onDelete(selectedOrder)}>
-                                Delete
-                            </Button>
-                        </ModalFooter></>
+                            <ModalBody className="text-black text-center">
+                                <p>This action cannot be undone.</p>
+                            </ModalBody>
+                            <ModalFooter className="flex justify-center gap-2">
+                                <Button variant="flat" onPress={onClose} className="bg-gray-300">
+                                    Cancel
+                                </Button>
+                                <Button color="danger" variant="flat" onPress={() => onDelete(selectedOrder)}>
+                                    Delete
+                                </Button>
+                            </ModalFooter></>
                     )}
                 </ModalContent>
             </Modal>

@@ -5,7 +5,7 @@ import { CgClose } from "react-icons/cg";
 import { IoAdd } from "react-icons/io5";
 import { Input } from "@heroui/input";
 import OrdersList from "./components/ordersList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface OrderFormData {
   id?: number;
@@ -34,6 +34,7 @@ interface OrderFormData {
 
 export default function Home() {
   const [formData, setFormData] = useState<OrderFormData>({});
+  const [cost, setCost] = useState<string>("");
 
   const handleCopy = (order: any) => {
     setFormData({});
@@ -90,12 +91,16 @@ export default function Home() {
     }
   }
 
+  useEffect(() => {
+    setFormData((prev) => ({ ...prev, total: cost }));
+  }, [cost]);
+
   return (
     <section className="w-[100dvw] h-[100dvh] py-10 flex overflow-hidden">
-      <div className="w-[28%] max-h-full h-full flex flex-col overflow-y-auto scrollbar-none">
+      <div className="w-[28%] max-h-full h-full flex flex-col overflow-y-auto scrollbar-none print:hidden">
         <OrdersList onCopy={handleCopy} onDelete={handleDelete} />
       </div>
-      <div className="flex flex-col gap-2 absolute left-[31.7dvw]">
+      <div className="flex flex-col gap-2 absolute left-[31.7dvw] print:relative print:left-2 print:top-2 print:w-full print:h-full print:overflow-hidden">
         <div className="w-[700px] h-[100px] flex gap-1">
           <div className="border-2 rounded-xl border-gray-600 relative w-[50%]"></div>
           <div className="grid grid-cols-2 gap-1 w-[50%]">
@@ -118,7 +123,7 @@ export default function Home() {
           <OrderInput name="CEP" width="w-[30%]" id="cep" type="number" copyValue={formData.cep} />
           <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" type="number" copyValue={formData.cpfCnpj} />
           <OrderInput name="IE" width="w-[30%]" id="ie" type="number" copyValue={formData.ie} />
-        </div> 
+        </div>
         <div className="w-[700px] h-[50px] flex gap-1">
           <OrderInput name="DISTRICT" width="w-[28%]" id="district" type="text" copyValue={formData.district} />
           <OrderInput name="PAYMENT" width="w-[28%]" id="payment" type="text" copyValue={formData.payment} />
@@ -140,16 +145,16 @@ export default function Home() {
             <OrderInput name="QNT" width="w-[10%]" id="qnt" type={"description"} copyValue={formData.qnt} />
             <OrderInput name="SIZE" width="w-[12%]" id="size" type={"description"} copyValue={formData.size} />
             <OrderInput name="DESCRIPTION" width="w-[60%]" id="description" type={"description"} copyValue={formData.description} />
-            <OrderInput name="COST" width="w-[10%]" id="cost" type={"description"} noBorder={true} copyValue={formData.cost} />
+            <OrderInput name="COST" width="w-[10%]" id="cost" type={"description"} noBorder={true} copyValue={formData.cost} total={setCost} />
           </div>
           <div className="w-full h-[40px] border-t-2 border-gray-600 relative h-[47px] flex place-items-center gap-2 text-sm">
             <Input disabled={true} size="lg" radius="none" className="w-[75%] px-2 flex place-self-center place-items-center bg-transparent border-r-2 border-gray-600" value={"30 days"}
               classNames={{ inputWrapper: "bg-transparent data-[hover=true]:bg-transparent", }} />
             <span className="w-[8%] pl-2 flex place-self-center place-items-center bg-transparent border-gray-500">TOTAL:</span>
-            <OrderInput name="TOTAL" width="w-[10%]" id="total" type={"description"} noBorder={true} copyValue={formData.total} />
+            <OrderInput name="TOTAL" width="w-[12%]" disabled={true} id="total" type={"description"} noBorder={true} copyValue={`R$ ${formData.total}`} />
           </div>
         </div>
-        <div className="w-[700px] h-[50px] flex gap-1 justify-center">
+        <div className="w-[700px] h-[50px] flex gap-1 justify-center print:hidden">
           <Button className="w-[50px] min-w-2 h-[50px] border-gray-500" radius="full" >
             <IoAdd color="white" className="w-[30px] h-[30px]" />
           </Button>

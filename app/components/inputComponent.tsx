@@ -14,8 +14,9 @@ interface InputProps {
   type?: string;
   noBorder?: boolean;
   copyValue?: string;
+  total?: (arg0: string) => void;
 }
-export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, copyValue }: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, copyValue, total }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -82,27 +83,31 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
               input: "text-black bg-transparent",
             }}
           ></Input>
-        </div >
-      )
-      }
-      {
-        type === "description" && (
-          <Input
-            size="md"
-            id={id}
-            placeholder="-"
-            disabled={disabled}
-            radius="none"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
-            classNames={{
-              inputWrapper:
-                "bg-transparent p-[5px] data-[hover=true]:bg-transparent",
-            }}
-          />
-        )
-      }
+        </div>
+      )}
+      {type === "description" && (
+        <Input
+          size="md"
+          id={id}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (id === "cost" && !/\d/.test(e.key)) {
+              e.preventDefault();
+            }
+          }}
+          disabled={disabled}
+          radius="none"
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+            if (id === "cost" && total !== undefined) {
+              total(e.target.value);
+            }
+          }} className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
+          classNames={{
+            inputWrapper: "bg-transparent p-[5px] data-[hover=true]:bg-transparent",
+          }}
+        />
+      )}
     </>
   );
 }

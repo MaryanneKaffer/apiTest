@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Order {
+  id              Int      @id @default(autoincrement())
+  date            String?
+  type            String?
+  contact         String?
+  corporateName   String?
+  phone           String?
+  address         String?
+  city            String?
+  state           String?
+  cep             String?
+  cpfCnpj         String?
+  ie              String?
+  district        String?
+  payment         String?
+  email           String?
+  deliveryAddress String?
+  code            String?
+  code2           String?
+  code3           String?
+  code4           String?
+  qnt             String?
+  qnt2            String?
+  qnt3            String?
+  qnt4            String?
+  size            String?
+  size2           String?
+  size3           String?
+  size4           String?
+  description     String?
+  description2    String?
+  description3    String?
+  description4    String?
+  cost            String?
+  cost2           String?
+  cost3           String?
+  cost4           String?
+  total           String?
+  createdAt       DateTime @default(now())
+}

@@ -17,9 +17,9 @@ export default function InfoModal({
   onOpenChange: (isOpen: boolean) => void;
 }) {
   const labels: Record<string, string> = {
+    date: "Date",
+    id: "Id",
     corporateName: "Corporation",
-    size: "Size",
-    qnt: "Quantity",
     total: "Total Value",
     contact: "Contact",
     phone: "Phone",
@@ -33,22 +33,35 @@ export default function InfoModal({
     payment: "Payment",
     email: "Email",
     deliveryAddress: "Delivery Address",
-    code: "Code",
     type: "Type",
+    code: "Code",
+    qnt: "Quantity",
+    size: "Size",
+    cost: "Cost",
+    code2: "Code",
+    qnt2: "Quantity",
+    size2: "Size",
+    cost2: "Cost",
+    code3: "Code",
+    qnt3: "Quantity",
+    size3: "Size",
+    cost3: "Cost",
+    code4: "Code",
+    qnt4: "Quantity",
+    size4: "Size",
+    cost4: "Cost",
     description: "Description",
-    date: "Date",
-    id: "Id",
   };
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop="blur" className="h-[580px]">
       <ModalContent>
         {(onClose: any) => (
           <>
             <ModalHeader className="mt-2 self-center text-xl">
               Order Details
             </ModalHeader>
-            <ModalBody className="text-black">
+            <ModalBody className="text-black overflow-y-auto scrollbar-hide">
               {Object.entries(order).map(([key, value]) => {
                 if (key === "cost" || key === "createdAt") {
                   return null;

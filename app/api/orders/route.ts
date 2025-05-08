@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
-// Use PrismaClient as a singleton to prevent too many connections
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 const prisma = globalForPrisma.prisma || new PrismaClient();
@@ -31,10 +30,25 @@ export async function POST(req: NextRequest) {
         email: body.email,
         deliveryAddress: body.deliveryAddress,
         code: body.code,
+        code2: body.code2,
+        code3: body.code3,
+        code4: body.code4,
         qnt: body.qnt,
+        qnt2: body.qnt2,
+        qnt3: body.qnt3,
+        qnt4: body.qnt4,
         size: body.size,
+        size2: body.size2,
+        size3: body.size3,
+        size4: body.size4,
         description: body.description,
+        description2: body.description2,
+        description3: body.description3,
+        description4: body.description4,
         cost: body.cost,
+        cost2: body.cost2,
+        cost3: body.cost3,
+        cost4: body.cost4,
         total: body.total,
       },
     });

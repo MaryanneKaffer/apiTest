@@ -63,7 +63,7 @@ export default function InfoModal({
             </ModalHeader>
             <ModalBody className="text-black overflow-y-auto scrollbar-hide">
               {Object.entries(order).map(([key, value]) => {
-                if (key === "cost" || key === "createdAt") {
+                if (key === "cost" || key === "createdAt" || value === null) {
                   return null;
                 }
                 return (

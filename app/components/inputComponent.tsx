@@ -13,13 +13,13 @@ interface InputProps {
   type?: string;
   noBorder?: boolean;
   value?: string;
-  total?: (arg0: string) => void;
+  cost?: (index: number, value: number) => void;
   size?: (index: number, value: string) => void;
   description?: (index: number, value: string) => void;
   index?: number;
 }
 
-export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, total, size, description, index }: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -105,19 +105,18 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
           size="md"
           id={id}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (id === "cost" && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) {
+            if ((!id?.includes("description")) && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) {
               e.preventDefault();
             }
-          }}
-          onBlur={() => {
+          }}          onBlur={() => {
             if (inputValue === "" && name) {
               setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
             }
-            if (id === "cost" && total !== undefined) {
-              total(inputValue);
+            if (id?.includes("cost") && cost) {
+              cost(index || 0, parseFloat(inputValue));
             }
           }}
-          maxLength={id === "cost" ? 8 : 100}
+          maxLength={id?.includes("cost") ? 8 : 100}
           placeholder={error}
           disabled={disabled}
           radius="none"

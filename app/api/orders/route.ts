@@ -49,6 +49,8 @@ export async function POST(req: NextRequest) {
         cost2: body.cost2,
         cost3: body.cost3,
         cost4: body.cost4,
+        discount: body.discount,
+        observation: body.observation,
         total: body.total,
       },
     });

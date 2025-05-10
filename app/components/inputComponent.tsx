@@ -17,9 +17,10 @@ interface InputProps {
   size?: (index: number, value: string) => void;
   description?: (index: number, value: string) => void;
   index?: number;
+  discount?: React.Dispatch<React.SetStateAction<number>>
 }
 
-export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index }: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index, discount }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -105,19 +106,22 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
           size="md"
           id={id}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if ((!id?.includes("description")) && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) {
+            if ((!id?.includes("description") && id !== "observation") && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) {
               e.preventDefault();
             }
-          }}          onBlur={() => {
-            if (inputValue === "" && name) {
+          }} onBlur={() => {
+            if (inputValue === "" && name && name !== "observation" && id !== "discount") {
               setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
             }
             if (id?.includes("cost") && cost) {
               cost(index || 0, parseFloat(inputValue));
             }
+            if (id === "discount" && discount) {
+              discount(parseFloat(inputValue));
+            }
           }}
           maxLength={id?.includes("cost") ? 8 : 100}
-          placeholder={error}
+          placeholder={id === "observation" ? "Obs..." : id === "discount" ? "Money" : error}
           disabled={disabled}
           radius="none"
           value={inputValue}
@@ -130,7 +134,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
           className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
           classNames={{
             inputWrapper: `p-[5px] bg-transparent ${error && "data-[hover=true]:bg-red-200"}`,
-            input: `${!id?.includes("description") && 'text-center'}`
+            input: `${!id?.includes("description") && id !== "observation" && id !== "discount" && 'text-center'} ${id === "observation" && "px-3"}`
           }}
         />
       )}

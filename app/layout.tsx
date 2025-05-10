@@ -18,7 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html suppressHydrationWarning lang="en">
-      <head />
+      <head>
+        <title>Order</title>
+        <link rel="icon" href="/icon.png" sizes="any" />
+      </head>
       <body
         className={clsx(
           "min-h-screen bg-background font-sans antialiased",

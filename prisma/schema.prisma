@@ -45,6 +45,8 @@ model Order {
   cost2           String?
   cost3           String?
   cost4           String?
+  discount        String?
+  observation     String?
   total           String?
   createdAt       DateTime  @default(now())
 }

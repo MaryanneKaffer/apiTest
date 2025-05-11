@@ -10,13 +10,13 @@ if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    console.log("Pedido recebido:", body);
 
+    
     const order = await prisma.order.create({
       data: {
-        id: body.id,
         date: body.date,
         type: body.type,
-        contact: body.contact,
         corporateName: body.corporateName,
         phone: body.phone,
         address: body.address,
@@ -30,27 +30,27 @@ export async function POST(req: NextRequest) {
         email: body.email,
         deliveryAddress: body.deliveryAddress,
         code: body.code,
-        code2: body.code2,
-        code3: body.code3,
-        code4: body.code4,
         qnt: body.qnt,
-        qnt2: body.qnt2,
-        qnt3: body.qnt3,
-        qnt4: body.qnt4,
         size: body.size,
-        size2: body.size2,
-        size3: body.size3,
-        size4: body.size4,
         description: body.description,
-        description2: body.description2,
-        description3: body.description3,
-        description4: body.description4,
         cost: body.cost,
+        code2: body.code2,
+        qnt2: body.qnt2,
+        size2: body.size2,
+        description2: body.description2,
         cost2: body.cost2,
+        code3: body.code3,
+        qnt3: body.qnt3,
+        size3: body.size3,
+        description3: body.description3,
         cost3: body.cost3,
+        code4: body.code4,
+        qnt4: body.qnt4,
+        size4: body.size4,
+        description4: body.description4,
         cost4: body.cost4,
-        discount: body.discount,
         observation: body.observation,
+        discount: body.discount,
         total: body.total,
       },
     });

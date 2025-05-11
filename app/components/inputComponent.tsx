@@ -18,9 +18,10 @@ interface InputProps {
   description?: (index: number, value: string) => void;
   index?: number;
   discount?: React.Dispatch<React.SetStateAction<number>>
+  code?: (index: number, value: string) => void;
 }
 
-export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index, discount }: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index, discount, code }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
@@ -32,7 +33,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (value !== undefined && value !== inputValue) {
+    if (value !== undefined) {
       setInputValue(value);
     }
   }, [value, fixedValue]);
@@ -41,7 +42,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
     <>
       {type === "autoComplete" && (
         <div className={`relative ${width}`}>
-          <Autocomplete maxLength={3} onKeyDown={(e) => { if (!/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); } }}
+          <Autocomplete maxLength={3} onKeyDown={(e) => { if (!/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); } }}  inputValue={inputValue}
             onSelectionChange={(value) => { setInputValue(value as string); const selectedBag = bags.find(bag => bag.code === value); if (selectedBag && size) size(index || 0, selectedBag.size); if (selectedBag && description) description(index || 0, selectedBag.description); }} className={`h-[38px]`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-b-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0' }}>
             {bags.map((value) => (
               <AutocompleteItem hideSelectedIcon key={value.code}>{value.code}</AutocompleteItem>
@@ -54,7 +55,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
       {type === "select" && (
         <>
           <p className="absolute -top-2 bg-white px-2 left-3 text-[12px] z-10">{name}</p>
-          <Select id={id} defaultSelectedKeys={inputValue} selectedKeys={new Set([inputValue])} onSelectionChange={(keys) => setInputValue(Array.from(keys)[0].toString())} className={`w-full place-self-center ${width}`} classNames={{
+          <Select id={id} defaultSelectedKeys={inputValue} selectedKeys={new Set([inputValue])} onSelectionChange={(keys) => { setInputValue(Array.from(keys)[0].toString()); if (code) code(index || 0, Array.from(keys)[0].toString()) }} className={`w-full place-self-center ${width}`} classNames={{
             innerWrapper: "border-none",
             trigger: `border-2 border-gray-600 rounded-xl h-[47px] ${width}`
           }}
@@ -93,7 +94,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
             color="default"
             value={inputValue}
             onChange={(e) => { setInputValue(e.target.value); setError(""); }}
-            className={`w-full place-self-center rounded-xl border-gray-500 flex relative h-[45px]`}
+            className={`w-full place-self-center rounded-xl border-gray-500 flex relative h-[45px] ${id === "discount" && "absolute left-[-200px] top-0"}`}
             classNames={{
               inputWrapper: `border-gray-600 ${error && "data-[hover=true]:bg-red-200"}`,
               input: "text-black bg-transparent"
@@ -102,41 +103,42 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
         </div>
       )}
       {type === "description" && (
-        <Input
-          size="md"
-          id={id}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if ((!id?.includes("description") && id !== "observation") && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) {
-              e.preventDefault();
-            }
-          }} onBlur={() => {
-            if (inputValue === "" && name && name !== "observation" && id !== "discount") {
-              setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
-            }
-            if (id?.includes("cost") && cost) {
-              cost(index || 0, parseFloat(inputValue));
-            }
-            if (id === "discount" && discount) {
-              discount(parseFloat(inputValue));
-            }
-          }}
-          maxLength={id?.includes("cost") ? 8 : 100}
-          placeholder={id === "observation" ? "Obs..." : id === "discount" ? "Money" : error}
-          disabled={disabled}
-          radius="none"
-          value={inputValue}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            if (error) {
-              setError("");
-            }
-          }}
-          className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
-          classNames={{
-            inputWrapper: `p-[5px] bg-transparent ${error && "data-[hover=true]:bg-red-200"}`,
-            input: `${!id?.includes("description") && id !== "observation" && id !== "discount" && 'text-center'} ${id === "observation" && "px-3"}`
-          }}
-        />
+        <>
+          <Input
+            size="md"
+            id={id}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+              if ((!id?.includes("description") && id !== "observation") && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); }
+              if ((name === "discount") && !/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); }
+            }} onBlur={() => {
+              if (inputValue === "" && name && name !== "observation" && id !== "discount") {
+                setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
+              }
+              if (id?.includes("cost") && cost) {
+                cost(index || 0, parseFloat(inputValue.replace(",", ".")));
+              }
+              if (id === "discount" && discount) {
+                name === "discount" ? discount(parseFloat(inputValue.replace(",", ".")) / 100) : discount(parseFloat(inputValue.replace(",", ".")))
+              }
+            }}
+            maxLength={id?.includes("cost") ? 8 : 100}
+            placeholder={id === "observation" ? "Obs..." : name === "discount" ? "Percent" : name === "paid" ? "Money" : error}
+            disabled={disabled}
+            radius="none"
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              if (error) {
+                setError("");
+              }
+            }}
+            className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
+            classNames={{
+              inputWrapper: `p-[5px] bg-transparent ${error && "data-[hover=true]:bg-red-200"}`,
+              input: `${!id?.includes("description") && id !== "observation" && id !== "discount" && 'text-center'} ${id === "observation" && "px-3"}`
+            }}
+          />
+        </>
       )}
     </>
   );

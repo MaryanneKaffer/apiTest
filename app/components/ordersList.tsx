@@ -10,9 +10,7 @@ import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@herou
 import { Input } from "@heroui/input";
 import SearchIcon from "./searchIcon";
 
-export let ordersLength: number = 0;
-
-export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) => void; onDelete: (order: any) => void; }) {
+export default function OrdersList({ onCopy, onDelete, setOrdersLength }: { onCopy: (order: any) => void; onDelete: (order: any) => void; setOrdersLength: (length: number) => void }) {
     const [orders, setOrders] = useState<any[]>([]);
     const [hoverIndex, setHoverIndex] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
@@ -32,6 +30,8 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
             const data = await res.json();
             const ordersArray = Array.isArray(data) ? data : [];
             setOrders(ordersArray);
+            const lastId = Math.max(...ordersArray.map(order => order.id))
+            setOrdersLength(lastId);
         }
         fetchOrders();
     }, []);
@@ -39,89 +39,36 @@ export default function OrdersList({ onCopy, onDelete }: { onCopy: (order: any) 
 
     return (
         <>
-            <Input
-                className="w-[500px] mx-3 fixed top-10 z-10"
-                isClearable
+            <Input className="w-[500px] mx-3 fixed top-10 z-10" isClearable placeholder="Type to search..." startContent={<SearchIcon />} radius="lg" onChange={(e) => setSearchTerm(e.target.value)} onClear={() => setSearchTerm("")}
                 classNames={{
-                    label: "text-black/50 dark:text-white/90",
-                    input: [
-                        "bg-transparent",
-                        "text-black/90 dark:text-white/90",
-                        "placeholder:text-default-700/50 dark:placeholder:text-white/60",
-                    ],
-                    innerWrapper: "bg-transparent",
-                    inputWrapper: [
-                        "shadow-xl",
-                        "bg-default-200/50",
-                        "dark:bg-default/60",
-                        "backdrop-blur-xl",
-                        "backdrop-saturate-200",
-                        "hover:bg-default-200/70",
-                        "dark:hover:bg-default/70",
-                        "group-data-[focus=true]:bg-default-200/50",
-                        "dark:group-data-[focus=true]:bg-default/60",
-                        "!cursor-text",
-                    ],
+                    label: "text-black/50 dark:text-white/90", input: ["bg-transparent", "text-black/90 dark:text-white/90", "placeholder:text-default-700/50 dark:placeholder:text-white/60",],
+                    innerWrapper: "bg-transparent", inputWrapper: ["shadow-xl", "bg-default-200/50", "dark:bg-default/60", "backdrop-blur-xl", "backdrop-saturate-200", "hover:bg-default-200/70", "dark:hover:bg-default/70", "group-data-[focus=true]:bg-default-200/50", "dark:group-data-[focus=true]:bg-default/60", "!cursor-text",],
                 }}
-                placeholder="Type to search..."
-                radius="lg"
-                startContent={
-                    <SearchIcon />
-                }
-                onChange={(e) => setSearchTerm(e.target.value)}
-                onClear={() => setSearchTerm("")}
             />
             <div className="w-[80%] flex flex-col gap-2 mt-12">
                 {(searchTerm ? orders.filter((order: { corporateName?: string, cpfCnpj: string, id: number }) => (order.corporateName + order.cpfCnpj + order.id.toString()).toLowerCase().includes(searchTerm.toLowerCase())) : orders).sort((a, b) => b.id - a.id).map((order, index) => (<Card
-                    key={order.id}
-                    className="mx-2 w-[500px] hover:scale-105"
-                    onMouseEnter={() => setHoverIndex(index as any)}
-                    onMouseLeave={() => setHoverIndex(null)}
-                >
+                    key={order.id} className="mx-2 w-[500px] hover:scale-105" onMouseEnter={() => setHoverIndex(index as any)} onMouseLeave={() => setHoverIndex(null)}  >
                     <CardBody>
                         <div className="flex gap-2 place-items-center">
                             <IoBagHandleOutline size={42} />
                             <div className="flex flex-col">
                                 <p>{order.corporateName}</p>
-                                <p className="text-gray-500 text-sm">
-                                    {order.size} - {order.qnt} - R${order.cost}
-                                </p>
-                                {order.code2 && <p className="text-gray-500 text-sm">
-                                    {order.size2} - {order.qnt2} - R${order.cost2}
-                                </p>}
-                                {order.code3 && <p className="text-gray-500 text-sm">
-                                    {order.size3} - {order.qnt3} - R${order.cost3}
-                                </p>}
-                                {order.code4 && <p className="text-gray-500 text-sm">
-                                    {order.size4} - {order.qnt4} - R${order.cost4}
-                                </p>}
+                                <p className="text-gray-500 text-sm">{order.size} - {order.qnt} - R${order.cost} </p>
+                                {order.code2 && <p className="text-gray-500 text-sm"> {order.size2} - {order.qnt2} - R${order.cost2}</p>}
+                                {order.code3 && <p className="text-gray-500 text-sm">{order.size3} - {order.qnt3} - R${order.cost3}</p>}
+                                {order.code4 && <p className="text-gray-500 text-sm">{order.size4} - {order.qnt4} - R${order.cost4}</p>}
                             </div>
-                            {hoverIndex === index && (
-                                <>
-                                    <Button
-                                        className="w-[40px] min-w-2 h-[40px] ml-auto p-0"
-                                        radius="full"
-                                        onPress={() => openInfoModal(order)}
-                                    >
-                                        <GrFormView color="white" size={30} />
-                                    </Button>
-                                    <Button
-                                        className="w-[40px] min-w-2 h-[40px] p-0"
-                                        radius="full"
-                                        onPress={() => onCopy(order)}
-                                    >
-                                        <LuCopy color="white" size={20} />
-                                    </Button>
-                                    <Button
-                                        className="w-[40px] min-w-2 h-[40px] bg-red-300 p-0"
-                                        variant="flat"
-                                        radius="full"
-                                        onPress={() => { setConfirmation(true); setSelectedOrder(order); setOrderId(order.id); }}
-                                    >
-                                        <MdDeleteOutline color="white" size={20} />
-                                    </Button>
-                                </>
-                            )}
+                            {hoverIndex === index && (<>
+                                <Button className="w-[40px] min-w-2 h-[40px] ml-auto p-0" radius="full" onPress={() => openInfoModal(order)} aria-labelledby="View order">
+                                    <GrFormView color="white" size={30} />
+                                </Button>
+                                <Button className="w-[40px] min-w-2 h-[40px] p-0" radius="full" onPress={() => onCopy(order)} aria-labelledby="Copy column" >
+                                    <LuCopy color="white" size={20} />
+                                </Button>
+                                <Button className="w-[40px] min-w-2 h-[40px] bg-red-300 p-0" variant="flat" radius="full" onPress={() => { setConfirmation(true); setSelectedOrder(order); setOrderId(order.id); }} aria-labelledby="Delete column">
+                                    <MdDeleteOutline color="white" size={20} />
+                                </Button>
+                            </>)}
                         </div>
                     </CardBody>
                 </Card>

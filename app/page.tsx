@@ -8,7 +8,7 @@ import { FaPen } from "react-icons/fa";
 import { MdDiscount } from "react-icons/md";
 import OrdersList from "./components/ordersList";
 import OrderInput from "./components/inputComponent";
-import { ordersLength } from "./components/ordersList";
+import { Select, SelectItem } from "@heroui/select";
 
 interface OrderFormData {
   id?: number;
@@ -60,6 +60,9 @@ export default function Home() {
   const [obsActive, setObsActive] = useState(false);
   const [discountActive, setDiscountActive] = useState(false);
   const [discount, setDiscount] = useState(0);
+  const discountSelect = [{ key: "discount", value: "Discount " }, { key: "paid", value: "Paid R$" }];
+  const [discountType, setDiscountType] = useState(discountSelect[0].key);
+  const [ordersLength, setOrdersLength] = useState(0);
   const [columns, setColumns] = useState(1);
 
   const updateSizeAtIndex = (index: number, value: string) => {
@@ -93,6 +96,10 @@ export default function Home() {
   const handleCopy = (order: any) => {
     setFormData(order);
 
+    order.discount ? setDiscountActive(true) : setDiscountActive(false);
+    order.observation ? setObsActive(true) : setObsActive(false);
+
+    order.code && setColumns(1);
     order.code2 && setColumns(2);
     order.code3 && setColumns(3);
     order.code4 && setColumns(4);
@@ -102,6 +109,20 @@ export default function Home() {
       parseFloat(order.cost2) || 0,
       parseFloat(order.cost3) || 0,
       parseFloat(order.cost4) || 0
+    ]);
+
+    setSize([
+      order.size || "",
+      order.size2 || "",
+      order.size3 || "",
+      order.size4 || ""
+    ]);
+
+    setDescription([
+      order.description || "",
+      order.description2 || "",
+      order.description3 || "",
+      order.description4 || ""
     ]);
   };
 
@@ -134,7 +155,7 @@ export default function Home() {
       "qnt", "qnt2", "qnt3", "qnt4",
       "size", "size2", "size3", "size4",
       "description", "description2", "description3", "description4",
-      "cost", "cost2", "cost3", "cost4",
+      "cost", "cost2", "cost3", "cost4", "discount",
       "observation", "total"
     ];
 
@@ -189,7 +210,10 @@ export default function Home() {
   }
 
   useEffect(() => {
-    setFormData((prev) => ({ ...prev, total: ((cost.reduce((sum, val) => sum + val, 0)) - discount), size: size[0], size2: size[1], size3: size[2], size4: size[3], description: description[0], description2: description[1], description3: description[2], description4: description[3] }));
+    const sum = cost.reduce((sum, val) => sum + val, 0);
+    const discountValue = !Number.isNaN(discount) && discount !== null ? discount : 0;
+    const total = discountType === "paid" ? sum - discountValue : sum - sum * discountValue;
+    setFormData((prev) => ({ ...prev, total, size: size[0], size2: size[1], size3: size[2], size4: size[3], description: description[0], description2: description[1], description3: description[2], description4: description[3] }));
   }, [cost, size, description, discount]);
 
   const manageColumns = () => {
@@ -203,16 +227,19 @@ export default function Home() {
   return (
     <section className="w-[100dvw] h-[100dvh] py-10 flex overflow-hidden">
       <div className="w-[28%] max-h-full h-full flex flex-col overflow-y-auto scrollbar-none print:hidden">
-        <OrdersList onCopy={handleCopy} onDelete={handleDelete} />
+        <OrdersList onCopy={handleCopy} onDelete={handleDelete} setOrdersLength={setOrdersLength}/>
       </div>
       <div className="flex flex-col gap-2 absolute left-[31.7dvw] print:relative print:left-2 print:top-2 print:w-full print:h-full print:overflow-hidden">
         <div className="w-[700px] h-[100px] flex gap-1">
-          <div className="border-2 rounded-xl border-gray-600 relative w-[50%]"></div>
+          <div className="border-2 rounded-xl border-gray-600 relative w-[50%] justify-items-center"><p className="my-[10%] italic">Logo Sample</p></div>
           <div className="grid grid-cols-2 gap-1 w-[50%]">
             <OrderInput name="DATE" width="w-[100%]" id="date" disabled={true} />
             <OrderInput width="w-[100%]" id="type" type={"select"} value={formData.type} />
-            <OrderInput width="w-[100%]" disabled={true} fixedValue={``} />
-            <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]"></div>
+            {ordersLength > 0 && <OrderInput width="w-[100%]" disabled={true} fixedValue={`Order N°${ordersLength + 1}`} />}
+            <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]">
+              <p>Contact</p>
+              <p>Sample</p>
+            </div>
           </div>
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
@@ -246,10 +273,10 @@ export default function Home() {
             <span className="w-[10%] px-2 h-[40px] border-gray-500 flex justify-center items-center"> COST </span>
           </div>
           <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-            <OrderInput name="CODE" width="w-[8%]" id="code" type={"autoComplete"} value={formData.code ?? ""} size={updateSizeAtIndex} description={updateDescriptionAtIndex} index={0} />
+            <OrderInput name="CODE" width="w-[8%]" id="code" type={"autoComplete"} value={formData.code} size={updateSizeAtIndex} description={updateDescriptionAtIndex} index={0} />
             <OrderInput name="QNT" width="w-[10%]" id="qnt" type={"description"} value={formData.qnt ?? ""} />
-            <OrderInput name="SIZE" width="w-[12%]" id="size" type={"description"} value={formData.size ?? ""} />
-            <OrderInput name="DESCRIPTION" width="w-[60%]" id="description" type={"description"} value={formData.description ?? ""} />
+            <OrderInput name="SIZE" width="w-[12%]" id="size" type={"description"} value={formData.size} />
+            <OrderInput name="DESCRIPTION" width="w-[60%]" id="description" type={"description"} value={formData.description} />
             <OrderInput name="COST" width="w-[10%]" id="cost" type={"description"} noBorder={true} value={formData.cost ?? ""} cost={updateCostAtIndex} index={0} />
           </div>
           {columns > 1 && (
@@ -279,31 +306,39 @@ export default function Home() {
           {obsActive && <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
             <OrderInput name="observation" width="w-[100%]" noBorder id="observation" type={"description"} value={formData.observation ?? ""} />
           </div>}
-          <div className="w-full h-[40px] border-t-2 border-gray-600 relative h-[47px] flex place-items-center gap-2 text-sm">
-            <Input size="lg" radius="none" className={`${discountActive ? "w-[44%]" : "w-[70%]"} px-2 flex bg-transparent border-r-2 border-gray-600`}
+          <div className="w-full h-[40px] border-t-2 border-gray-600 relative h-[47px] flex place-items-center text-sm">
+            <Input size="lg" radius="none" className={`${discountActive ? "w-[50%]" : "w-[70%]"} px-2 flex bg-transparent border-r-2 border-gray-600`}
               classNames={{ inputWrapper: "bg-transparent data-[hover=true]:bg-transparent" }} />
             {discountActive &&
-              <><p>Discount: </p>
-                <OrderInput name="discount" width="w-[15%]" id="discount" type={"description"} value={formData.discount} discount={setDiscount} /></>
+              <div className="flex">
+                <Select className="w-[140px] ml-6 -mr-16" defaultSelectedKeys={discountType} selectedKeys={new Set([discountType])} onSelectionChange={(keys) => { const key = Array.from(keys)[0]; if (typeof key === "string") setDiscountType(key); }} classNames={{ selectorIcon: "absolute left-[-10%] bottom-3", }}>
+                  {discountSelect.map((item) => (
+                    <SelectItem key={item.key}>{item.value}</SelectItem>
+                  ))}
+                </Select>
+                <OrderInput name={discountType} width="w-[30%]" id="discount" type={"description"} value={formData.discount ?? ""} discount={setDiscount} />
+              </div>
             }
-            <span className="w-[8%] pl-2 flex place-self-center place-items-center bg-transparent border-gray-500">TOTAL:</span>
-            <OrderInput name="TOTAL" width="w-[13%]" disabled={true} id="total" type={"description"} noBorder={true} value={`R$ ${formData.total}`} />
+            <div className={`flex m-auto gap-2 relative ${discountActive ? "absolute w-[17.6%] right-[6.6%]" : "w-[20%]"}`}>
+              <span className={`${discountActive ? "w-[11%]" : "w-[10%]"} ml-auto mr-6 flex place-self-center place-items-center bg-transparent border-gray-500`}>TOTAL:</span>
+              <OrderInput name="TOTAL" width={discountActive ? "min-w-[90px]" : "w-[63%]"} disabled={true} id="total" type={"description"} noBorder={true} value={`R$ ${formData.total?.toFixed(2)}`} />
+            </div>
           </div>
         </div>
         <div className="w-[700px] h-[50px] flex gap-1 justify-center print:hidden">
-          <Button className="w-[50px] min-w-2 p-0 h-[50px] bg-gray-400" radius="full" onPress={() => manageColumns()}>
+          <Button className="w-[50px] min-w-2 p-0 h-[50px] bg-gray-400" radius="full" onPress={() => manageColumns()} aria-labelledby="Add column" >
             <IoBagAddOutline color="white" className="w-[25px] h-[25px]" />
           </Button>
-          <Button className="w-[50px] min-w-2 h-[50px] bg-gray-400" radius="full" onPress={() => setObsActive(!obsActive)}>
+          <Button className="w-[50px] min-w-2 h-[50px] bg-gray-400" radius="full" onPress={() => setObsActive(!obsActive)} aria-labelledby="Add observation column" >
             <FaPen color="white" className="w-[30px] h-[30px]" />
           </Button>
-          <Button className="w-[100px] h-[50px] bg-gray-400 text-white" radius="full" onPress={() => handleSubmit()} >
+          <Button className="w-[100px] h-[50px] bg-gray-400 text-white" radius="full" onPress={() => handleSubmit()} aria-labelledby="Submit order" >
             Submit
           </Button>
-          <Button className="w-[50px] min-w-2 h-[50px] bg-gray-400" radius="full" onPress={() => setDiscountActive(!discountActive)}>
+          <Button className="w-[50px] min-w-2 h-[50px] bg-gray-400" radius="full" onPress={() => setDiscountActive(!discountActive)} aria-labelledby="Add discount area" >
             <MdDiscount color="white" className="w-[30px] h-[30px]" />
           </Button>
-          <Button className="w-[50px] min-w-2 h-[50px] bg-red-400 opacity-70 p-0" onPress={() => clear()} radius="full">
+          <Button className="w-[50px] min-w-2 h-[50px] bg-red-400 opacity-70 p-0" onPress={() => clear()} radius="full" aria-labelledby="Clear order" >
             <CgClose color="white" className="w-[23px] h-[23px]" />
           </Button>
         </div>

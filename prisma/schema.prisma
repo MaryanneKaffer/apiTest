@@ -12,7 +12,6 @@ model Order {
   id              Int       @id @default(autoincrement())
   date            String?
   type            String?
-  contact         String?
   corporateName   String?
   phone           String?
   address         String?
@@ -26,27 +25,27 @@ model Order {
   email           String?
   deliveryAddress String?
   code            String?
-  code2           String?
-  code3           String?
-  code4           String?
   qnt             String?
-  qnt2            String?
-  qnt3            String?
-  qnt4            String?
   size            String?
-  size2           String?
-  size3           String?
-  size4           String?
   description     String?
+  cost            Decimal?
+  code2           String?
+  qnt2            String?
+  size2           String?
   description2    String?
+  cost2           Decimal?
+  code3           String?
+  qnt3            String?
+  size3           String?
   description3    String?
+  cost3           Decimal?
+  code4           String?
+  qnt4            String?
+  size4           String?
   description4    String?
-  cost            String?
-  cost2           String?
-  cost3           String?
-  cost4           String?
-  discount        String?
+  cost4           Decimal?
   observation     String?
+  discount        Decimal?
   total           String?
   createdAt       DateTime  @default(now())
 }

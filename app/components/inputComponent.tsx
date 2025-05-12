@@ -100,37 +100,18 @@ export default function OrderInput({ name, width, id, fixedValue, type, noBorder
 
       {type === "description" && (
         <>
-          <Input
-            size="md"
-            id={id}
+          <Input size="md" id={id} maxLength={id?.includes("cost") ? 8 : 100} radius="none" value={inputValue} placeholder={id === "observation" ? "Obs..." : name === "discount" ? "Percent" : name === "paid" ? "Money" : error}
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if ((!id?.includes("description") && id !== "observation") && !id?.includes("size") && !inputType.test(e.key)) { e.preventDefault(); }
               if ((name === "discount") && inputType.test(e.key)) { e.preventDefault(); }
             }}
             onBlur={() => {
-              if (inputValue === "" && name && name !== "observation" && id !== "discount") {
-                setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
-              }
-              if (id?.includes("cost") && cost) {
-                cost(index || 0, parseFloat(inputValue.replace(",", ".")));
-              }
-              if (id?.includes("qnt")) {
-                quantity?.(index || 0, inputValue);
-              }
-              if (id === "discount" && discount) {
-                name === "discount" ? discount(parseFloat(inputValue.replace(",", ".")) / 100) : discount(parseFloat(inputValue.replace(",", ".")))
-              }
+              if (inputValue === "" && name && name !== "observation" && id !== "discount") { setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`); }
+              if (id?.includes("cost") && cost) { cost(index || 0, parseFloat(inputValue.replace(",", "."))); }
+              if (id?.includes("qnt")) { quantity?.(index || 0, inputValue); }
+              if (id === "discount" && discount) { name === "discount" ? discount(parseFloat(inputValue.replace(",", ".")) / 100) : discount(parseFloat(inputValue.replace(",", "."))) }
             }}
-            maxLength={id?.includes("cost") ? 8 : 100}
-            placeholder={id === "observation" ? "Obs..." : name === "discount" ? "Percent" : name === "paid" ? "Money" : error}
-            radius="none"
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-              if (error) {
-                setError("");
-              }
-            }}
+            onChange={(e) => { setInputValue(e.target.value); if (error) { setError(""); } }}
             className={`${width} h-[40px] bg-transparent ${noBorder ? "border-none" : "border-r-2 border-gray-600"}`}
             classNames={{
               inputWrapper: `p-[5px] bg-transparent ${error && "data-[hover=true]:bg-red-200"}`,

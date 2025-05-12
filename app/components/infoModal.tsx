@@ -6,7 +6,6 @@ import {
   ModalFooter,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { useState } from "react";
 
 export default function InfoModal({
   order,

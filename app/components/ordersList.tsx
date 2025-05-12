@@ -46,8 +46,8 @@ export default function OrdersList({ onCopy, onDelete, setOrdersLength }: { onCo
                 }}
             />
             <div className="w-[80%] flex flex-col gap-2 mt-12">
-                {(searchTerm ? orders.filter((order: { corporateName?: string, cpfCnpj: string, id: number }) => (order.corporateName + order.cpfCnpj + order.id.toString()).toLowerCase().includes(searchTerm.toLowerCase())) : orders).sort((a, b) => b.id - a.id).map((order, index) => (<Card
-                    key={order.id} className="mx-2 w-[500px] hover:scale-105" onMouseEnter={() => setHoverIndex(index as any)} onMouseLeave={() => setHoverIndex(null)}  >
+                {(searchTerm ? orders.filter((order: { corporateName?: string, cpfCnpj: string, id: number }) => (order.corporateName + order.cpfCnpj + order.id.toString()).toLowerCase().includes(searchTerm.toLowerCase())) : orders).sort((a, b) => b.id - a.id).map((order, index) => (
+                    <Card key={order.id} className="mx-2 w-[500px] hover:scale-105" onMouseEnter={() => setHoverIndex(index as any)} onMouseLeave={() => setHoverIndex(null)}  >
                     <CardBody>
                         <div className="flex gap-2 place-items-center">
                             <IoBagHandleOutline size={42} />

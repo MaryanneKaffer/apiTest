@@ -883,17 +883,26 @@ export namespace Prisma {
 
   export type OrderAvgAggregateOutputType = {
     id: number | null
+    cost: Decimal | null
+    cost2: Decimal | null
+    cost3: Decimal | null
+    cost4: Decimal | null
+    discount: Decimal | null
   }
 
   export type OrderSumAggregateOutputType = {
     id: number | null
+    cost: Decimal | null
+    cost2: Decimal | null
+    cost3: Decimal | null
+    cost4: Decimal | null
+    discount: Decimal | null
   }
 
   export type OrderMinAggregateOutputType = {
     id: number | null
     date: string | null
     type: string | null
-    contact: string | null
     corporateName: string | null
     phone: string | null
     address: string | null
@@ -907,25 +916,27 @@ export namespace Prisma {
     email: string | null
     deliveryAddress: string | null
     code: string | null
-    code2: string | null
-    code3: string | null
-    code4: string | null
     qnt: string | null
-    qnt2: string | null
-    qnt3: string | null
-    qnt4: string | null
     size: string | null
-    size2: string | null
-    size3: string | null
-    size4: string | null
     description: string | null
+    cost: Decimal | null
+    code2: string | null
+    qnt2: string | null
+    size2: string | null
     description2: string | null
+    cost2: Decimal | null
+    code3: string | null
+    qnt3: string | null
+    size3: string | null
     description3: string | null
+    cost3: Decimal | null
+    code4: string | null
+    qnt4: string | null
+    size4: string | null
     description4: string | null
-    cost: string | null
-    cost2: string | null
-    cost3: string | null
-    cost4: string | null
+    cost4: Decimal | null
+    observation: string | null
+    discount: Decimal | null
     total: string | null
     createdAt: Date | null
   }
@@ -934,7 +945,6 @@ export namespace Prisma {
     id: number | null
     date: string | null
     type: string | null
-    contact: string | null
     corporateName: string | null
     phone: string | null
     address: string | null
@@ -948,25 +958,27 @@ export namespace Prisma {
     email: string | null
     deliveryAddress: string | null
     code: string | null
-    code2: string | null
-    code3: string | null
-    code4: string | null
     qnt: string | null
-    qnt2: string | null
-    qnt3: string | null
-    qnt4: string | null
     size: string | null
-    size2: string | null
-    size3: string | null
-    size4: string | null
     description: string | null
+    cost: Decimal | null
+    code2: string | null
+    qnt2: string | null
+    size2: string | null
     description2: string | null
+    cost2: Decimal | null
+    code3: string | null
+    qnt3: string | null
+    size3: string | null
     description3: string | null
+    cost3: Decimal | null
+    code4: string | null
+    qnt4: string | null
+    size4: string | null
     description4: string | null
-    cost: string | null
-    cost2: string | null
-    cost3: string | null
-    cost4: string | null
+    cost4: Decimal | null
+    observation: string | null
+    discount: Decimal | null
     total: string | null
     createdAt: Date | null
   }
@@ -975,7 +987,6 @@ export namespace Prisma {
     id: number
     date: number
     type: number
-    contact: number
     corporateName: number
     phone: number
     address: number
@@ -989,25 +1000,27 @@ export namespace Prisma {
     email: number
     deliveryAddress: number
     code: number
-    code2: number
-    code3: number
-    code4: number
     qnt: number
-    qnt2: number
-    qnt3: number
-    qnt4: number
     size: number
-    size2: number
-    size3: number
-    size4: number
     description: number
-    description2: number
-    description3: number
-    description4: number
     cost: number
+    code2: number
+    qnt2: number
+    size2: number
+    description2: number
     cost2: number
+    code3: number
+    qnt3: number
+    size3: number
+    description3: number
     cost3: number
+    code4: number
+    qnt4: number
+    size4: number
+    description4: number
     cost4: number
+    observation: number
+    discount: number
     total: number
     createdAt: number
     _all: number
@@ -1016,17 +1029,26 @@ export namespace Prisma {
 
   export type OrderAvgAggregateInputType = {
     id?: true
+    cost?: true
+    cost2?: true
+    cost3?: true
+    cost4?: true
+    discount?: true
   }
 
   export type OrderSumAggregateInputType = {
     id?: true
+    cost?: true
+    cost2?: true
+    cost3?: true
+    cost4?: true
+    discount?: true
   }
 
   export type OrderMinAggregateInputType = {
     id?: true
     date?: true
     type?: true
-    contact?: true
     corporateName?: true
     phone?: true
     address?: true
@@ -1040,25 +1062,27 @@ export namespace Prisma {
     email?: true
     deliveryAddress?: true
     code?: true
-    code2?: true
-    code3?: true
-    code4?: true
     qnt?: true
-    qnt2?: true
-    qnt3?: true
-    qnt4?: true
     size?: true
-    size2?: true
-    size3?: true
-    size4?: true
     description?: true
-    description2?: true
-    description3?: true
-    description4?: true
     cost?: true
+    code2?: true
+    qnt2?: true
+    size2?: true
+    description2?: true
     cost2?: true
+    code3?: true
+    qnt3?: true
+    size3?: true
+    description3?: true
     cost3?: true
+    code4?: true
+    qnt4?: true
+    size4?: true
+    description4?: true
     cost4?: true
+    observation?: true
+    discount?: true
     total?: true
     createdAt?: true
   }
@@ -1067,7 +1091,6 @@ export namespace Prisma {
     id?: true
     date?: true
     type?: true
-    contact?: true
     corporateName?: true
     phone?: true
     address?: true
@@ -1081,25 +1104,27 @@ export namespace Prisma {
     email?: true
     deliveryAddress?: true
     code?: true
-    code2?: true
-    code3?: true
-    code4?: true
     qnt?: true
-    qnt2?: true
-    qnt3?: true
-    qnt4?: true
     size?: true
-    size2?: true
-    size3?: true
-    size4?: true
     description?: true
-    description2?: true
-    description3?: true
-    description4?: true
     cost?: true
+    code2?: true
+    qnt2?: true
+    size2?: true
+    description2?: true
     cost2?: true
+    code3?: true
+    qnt3?: true
+    size3?: true
+    description3?: true
     cost3?: true
+    code4?: true
+    qnt4?: true
+    size4?: true
+    description4?: true
     cost4?: true
+    observation?: true
+    discount?: true
     total?: true
     createdAt?: true
   }
@@ -1108,7 +1133,6 @@ export namespace Prisma {
     id?: true
     date?: true
     type?: true
-    contact?: true
     corporateName?: true
     phone?: true
     address?: true
@@ -1122,25 +1146,27 @@ export namespace Prisma {
     email?: true
     deliveryAddress?: true
     code?: true
-    code2?: true
-    code3?: true
-    code4?: true
     qnt?: true
-    qnt2?: true
-    qnt3?: true
-    qnt4?: true
     size?: true
-    size2?: true
-    size3?: true
-    size4?: true
     description?: true
-    description2?: true
-    description3?: true
-    description4?: true
     cost?: true
+    code2?: true
+    qnt2?: true
+    size2?: true
+    description2?: true
     cost2?: true
+    code3?: true
+    qnt3?: true
+    size3?: true
+    description3?: true
     cost3?: true
+    code4?: true
+    qnt4?: true
+    size4?: true
+    description4?: true
     cost4?: true
+    observation?: true
+    discount?: true
     total?: true
     createdAt?: true
     _all?: true
@@ -1236,7 +1262,6 @@ export namespace Prisma {
     id: number
     date: string | null
     type: string | null
-    contact: string | null
     corporateName: string | null
     phone: string | null
     address: string | null
@@ -1250,25 +1275,27 @@ export namespace Prisma {
     email: string | null
     deliveryAddress: string | null
     code: string | null
-    code2: string | null
-    code3: string | null
-    code4: string | null
     qnt: string | null
-    qnt2: string | null
-    qnt3: string | null
-    qnt4: string | null
     size: string | null
-    size2: string | null
-    size3: string | null
-    size4: string | null
     description: string | null
+    cost: Decimal | null
+    code2: string | null
+    qnt2: string | null
+    size2: string | null
     description2: string | null
+    cost2: Decimal | null
+    code3: string | null
+    qnt3: string | null
+    size3: string | null
     description3: string | null
+    cost3: Decimal | null
+    code4: string | null
+    qnt4: string | null
+    size4: string | null
     description4: string | null
-    cost: string | null
-    cost2: string | null
-    cost3: string | null
-    cost4: string | null
+    cost4: Decimal | null
+    observation: string | null
+    discount: Decimal | null
     total: string | null
     createdAt: Date
     _count: OrderCountAggregateOutputType | null
@@ -1296,7 +1323,6 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     type?: boolean
-    contact?: boolean
     corporateName?: boolean
     phone?: boolean
     address?: boolean
@@ -1310,25 +1336,27 @@ export namespace Prisma {
     email?: boolean
     deliveryAddress?: boolean
     code?: boolean
-    code2?: boolean
-    code3?: boolean
-    code4?: boolean
     qnt?: boolean
-    qnt2?: boolean
-    qnt3?: boolean
-    qnt4?: boolean
     size?: boolean
-    size2?: boolean
-    size3?: boolean
-    size4?: boolean
     description?: boolean
-    description2?: boolean
-    description3?: boolean
-    description4?: boolean
     cost?: boolean
+    code2?: boolean
+    qnt2?: boolean
+    size2?: boolean
+    description2?: boolean
     cost2?: boolean
+    code3?: boolean
+    qnt3?: boolean
+    size3?: boolean
+    description3?: boolean
     cost3?: boolean
+    code4?: boolean
+    qnt4?: boolean
+    size4?: boolean
+    description4?: boolean
     cost4?: boolean
+    observation?: boolean
+    discount?: boolean
     total?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["order"]>
@@ -1337,7 +1365,6 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     type?: boolean
-    contact?: boolean
     corporateName?: boolean
     phone?: boolean
     address?: boolean
@@ -1351,25 +1378,27 @@ export namespace Prisma {
     email?: boolean
     deliveryAddress?: boolean
     code?: boolean
-    code2?: boolean
-    code3?: boolean
-    code4?: boolean
     qnt?: boolean
-    qnt2?: boolean
-    qnt3?: boolean
-    qnt4?: boolean
     size?: boolean
-    size2?: boolean
-    size3?: boolean
-    size4?: boolean
     description?: boolean
-    description2?: boolean
-    description3?: boolean
-    description4?: boolean
     cost?: boolean
+    code2?: boolean
+    qnt2?: boolean
+    size2?: boolean
+    description2?: boolean
     cost2?: boolean
+    code3?: boolean
+    qnt3?: boolean
+    size3?: boolean
+    description3?: boolean
     cost3?: boolean
+    code4?: boolean
+    qnt4?: boolean
+    size4?: boolean
+    description4?: boolean
     cost4?: boolean
+    observation?: boolean
+    discount?: boolean
     total?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["order"]>
@@ -1378,7 +1407,6 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     type?: boolean
-    contact?: boolean
     corporateName?: boolean
     phone?: boolean
     address?: boolean
@@ -1392,25 +1420,27 @@ export namespace Prisma {
     email?: boolean
     deliveryAddress?: boolean
     code?: boolean
-    code2?: boolean
-    code3?: boolean
-    code4?: boolean
     qnt?: boolean
-    qnt2?: boolean
-    qnt3?: boolean
-    qnt4?: boolean
     size?: boolean
-    size2?: boolean
-    size3?: boolean
-    size4?: boolean
     description?: boolean
-    description2?: boolean
-    description3?: boolean
-    description4?: boolean
     cost?: boolean
+    code2?: boolean
+    qnt2?: boolean
+    size2?: boolean
+    description2?: boolean
     cost2?: boolean
+    code3?: boolean
+    qnt3?: boolean
+    size3?: boolean
+    description3?: boolean
     cost3?: boolean
+    code4?: boolean
+    qnt4?: boolean
+    size4?: boolean
+    description4?: boolean
     cost4?: boolean
+    observation?: boolean
+    discount?: boolean
     total?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["order"]>
@@ -1419,7 +1449,6 @@ export namespace Prisma {
     id?: boolean
     date?: boolean
     type?: boolean
-    contact?: boolean
     corporateName?: boolean
     phone?: boolean
     address?: boolean
@@ -1433,30 +1462,32 @@ export namespace Prisma {
     email?: boolean
     deliveryAddress?: boolean
     code?: boolean
-    code2?: boolean
-    code3?: boolean
-    code4?: boolean
     qnt?: boolean
-    qnt2?: boolean
-    qnt3?: boolean
-    qnt4?: boolean
     size?: boolean
-    size2?: boolean
-    size3?: boolean
-    size4?: boolean
     description?: boolean
-    description2?: boolean
-    description3?: boolean
-    description4?: boolean
     cost?: boolean
+    code2?: boolean
+    qnt2?: boolean
+    size2?: boolean
+    description2?: boolean
     cost2?: boolean
+    code3?: boolean
+    qnt3?: boolean
+    size3?: boolean
+    description3?: boolean
     cost3?: boolean
+    code4?: boolean
+    qnt4?: boolean
+    size4?: boolean
+    description4?: boolean
     cost4?: boolean
+    observation?: boolean
+    discount?: boolean
     total?: boolean
     createdAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "type" | "contact" | "corporateName" | "phone" | "address" | "city" | "state" | "cep" | "cpfCnpj" | "ie" | "district" | "payment" | "email" | "deliveryAddress" | "code" | "code2" | "code3" | "code4" | "qnt" | "qnt2" | "qnt3" | "qnt4" | "size" | "size2" | "size3" | "size4" | "description" | "description2" | "description3" | "description4" | "cost" | "cost2" | "cost3" | "cost4" | "total" | "createdAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "type" | "corporateName" | "phone" | "address" | "city" | "state" | "cep" | "cpfCnpj" | "ie" | "district" | "payment" | "email" | "deliveryAddress" | "code" | "qnt" | "size" | "description" | "cost" | "code2" | "qnt2" | "size2" | "description2" | "cost2" | "code3" | "qnt3" | "size3" | "description3" | "cost3" | "code4" | "qnt4" | "size4" | "description4" | "cost4" | "observation" | "discount" | "total" | "createdAt", ExtArgs["result"]["order"]>
 
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Order"
@@ -1465,7 +1496,6 @@ export namespace Prisma {
       id: number
       date: string | null
       type: string | null
-      contact: string | null
       corporateName: string | null
       phone: string | null
       address: string | null
@@ -1479,25 +1509,27 @@ export namespace Prisma {
       email: string | null
       deliveryAddress: string | null
       code: string | null
-      code2: string | null
-      code3: string | null
-      code4: string | null
       qnt: string | null
-      qnt2: string | null
-      qnt3: string | null
-      qnt4: string | null
       size: string | null
-      size2: string | null
-      size3: string | null
-      size4: string | null
       description: string | null
+      cost: Prisma.Decimal | null
+      code2: string | null
+      qnt2: string | null
+      size2: string | null
       description2: string | null
+      cost2: Prisma.Decimal | null
+      code3: string | null
+      qnt3: string | null
+      size3: string | null
       description3: string | null
+      cost3: Prisma.Decimal | null
+      code4: string | null
+      qnt4: string | null
+      size4: string | null
       description4: string | null
-      cost: string | null
-      cost2: string | null
-      cost3: string | null
-      cost4: string | null
+      cost4: Prisma.Decimal | null
+      observation: string | null
+      discount: Prisma.Decimal | null
       total: string | null
       createdAt: Date
     }, ExtArgs["result"]["order"]>
@@ -1926,7 +1958,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Order", 'Int'>
     readonly date: FieldRef<"Order", 'String'>
     readonly type: FieldRef<"Order", 'String'>
-    readonly contact: FieldRef<"Order", 'String'>
     readonly corporateName: FieldRef<"Order", 'String'>
     readonly phone: FieldRef<"Order", 'String'>
     readonly address: FieldRef<"Order", 'String'>
@@ -1940,25 +1971,27 @@ export namespace Prisma {
     readonly email: FieldRef<"Order", 'String'>
     readonly deliveryAddress: FieldRef<"Order", 'String'>
     readonly code: FieldRef<"Order", 'String'>
-    readonly code2: FieldRef<"Order", 'String'>
-    readonly code3: FieldRef<"Order", 'String'>
-    readonly code4: FieldRef<"Order", 'String'>
     readonly qnt: FieldRef<"Order", 'String'>
-    readonly qnt2: FieldRef<"Order", 'String'>
-    readonly qnt3: FieldRef<"Order", 'String'>
-    readonly qnt4: FieldRef<"Order", 'String'>
     readonly size: FieldRef<"Order", 'String'>
-    readonly size2: FieldRef<"Order", 'String'>
-    readonly size3: FieldRef<"Order", 'String'>
-    readonly size4: FieldRef<"Order", 'String'>
     readonly description: FieldRef<"Order", 'String'>
+    readonly cost: FieldRef<"Order", 'Decimal'>
+    readonly code2: FieldRef<"Order", 'String'>
+    readonly qnt2: FieldRef<"Order", 'String'>
+    readonly size2: FieldRef<"Order", 'String'>
     readonly description2: FieldRef<"Order", 'String'>
+    readonly cost2: FieldRef<"Order", 'Decimal'>
+    readonly code3: FieldRef<"Order", 'String'>
+    readonly qnt3: FieldRef<"Order", 'String'>
+    readonly size3: FieldRef<"Order", 'String'>
     readonly description3: FieldRef<"Order", 'String'>
+    readonly cost3: FieldRef<"Order", 'Decimal'>
+    readonly code4: FieldRef<"Order", 'String'>
+    readonly qnt4: FieldRef<"Order", 'String'>
+    readonly size4: FieldRef<"Order", 'String'>
     readonly description4: FieldRef<"Order", 'String'>
-    readonly cost: FieldRef<"Order", 'String'>
-    readonly cost2: FieldRef<"Order", 'String'>
-    readonly cost3: FieldRef<"Order", 'String'>
-    readonly cost4: FieldRef<"Order", 'String'>
+    readonly cost4: FieldRef<"Order", 'Decimal'>
+    readonly observation: FieldRef<"Order", 'String'>
+    readonly discount: FieldRef<"Order", 'Decimal'>
     readonly total: FieldRef<"Order", 'String'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
   }
@@ -2340,7 +2373,6 @@ export namespace Prisma {
     id: 'id',
     date: 'date',
     type: 'type',
-    contact: 'contact',
     corporateName: 'corporateName',
     phone: 'phone',
     address: 'address',
@@ -2354,25 +2386,27 @@ export namespace Prisma {
     email: 'email',
     deliveryAddress: 'deliveryAddress',
     code: 'code',
-    code2: 'code2',
-    code3: 'code3',
-    code4: 'code4',
     qnt: 'qnt',
-    qnt2: 'qnt2',
-    qnt3: 'qnt3',
-    qnt4: 'qnt4',
     size: 'size',
-    size2: 'size2',
-    size3: 'size3',
-    size4: 'size4',
     description: 'description',
-    description2: 'description2',
-    description3: 'description3',
-    description4: 'description4',
     cost: 'cost',
+    code2: 'code2',
+    qnt2: 'qnt2',
+    size2: 'size2',
+    description2: 'description2',
     cost2: 'cost2',
+    code3: 'code3',
+    qnt3: 'qnt3',
+    size3: 'size3',
+    description3: 'description3',
     cost3: 'cost3',
+    code4: 'code4',
+    qnt4: 'qnt4',
+    size4: 'size4',
+    description4: 'description4',
     cost4: 'cost4',
+    observation: 'observation',
+    discount: 'discount',
     total: 'total',
     createdAt: 'createdAt'
   };
@@ -2416,6 +2450,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Decimal'
+   */
+  export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -2439,7 +2480,6 @@ export namespace Prisma {
     id?: IntFilter<"Order"> | number
     date?: StringNullableFilter<"Order"> | string | null
     type?: StringNullableFilter<"Order"> | string | null
-    contact?: StringNullableFilter<"Order"> | string | null
     corporateName?: StringNullableFilter<"Order"> | string | null
     phone?: StringNullableFilter<"Order"> | string | null
     address?: StringNullableFilter<"Order"> | string | null
@@ -2453,25 +2493,27 @@ export namespace Prisma {
     email?: StringNullableFilter<"Order"> | string | null
     deliveryAddress?: StringNullableFilter<"Order"> | string | null
     code?: StringNullableFilter<"Order"> | string | null
-    code2?: StringNullableFilter<"Order"> | string | null
-    code3?: StringNullableFilter<"Order"> | string | null
-    code4?: StringNullableFilter<"Order"> | string | null
     qnt?: StringNullableFilter<"Order"> | string | null
-    qnt2?: StringNullableFilter<"Order"> | string | null
-    qnt3?: StringNullableFilter<"Order"> | string | null
-    qnt4?: StringNullableFilter<"Order"> | string | null
     size?: StringNullableFilter<"Order"> | string | null
-    size2?: StringNullableFilter<"Order"> | string | null
-    size3?: StringNullableFilter<"Order"> | string | null
-    size4?: StringNullableFilter<"Order"> | string | null
     description?: StringNullableFilter<"Order"> | string | null
+    cost?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code2?: StringNullableFilter<"Order"> | string | null
+    qnt2?: StringNullableFilter<"Order"> | string | null
+    size2?: StringNullableFilter<"Order"> | string | null
     description2?: StringNullableFilter<"Order"> | string | null
+    cost2?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code3?: StringNullableFilter<"Order"> | string | null
+    qnt3?: StringNullableFilter<"Order"> | string | null
+    size3?: StringNullableFilter<"Order"> | string | null
     description3?: StringNullableFilter<"Order"> | string | null
+    cost3?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code4?: StringNullableFilter<"Order"> | string | null
+    qnt4?: StringNullableFilter<"Order"> | string | null
+    size4?: StringNullableFilter<"Order"> | string | null
     description4?: StringNullableFilter<"Order"> | string | null
-    cost?: StringNullableFilter<"Order"> | string | null
-    cost2?: StringNullableFilter<"Order"> | string | null
-    cost3?: StringNullableFilter<"Order"> | string | null
-    cost4?: StringNullableFilter<"Order"> | string | null
+    cost4?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    observation?: StringNullableFilter<"Order"> | string | null
+    discount?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
     total?: StringNullableFilter<"Order"> | string | null
     createdAt?: DateTimeFilter<"Order"> | Date | string
   }
@@ -2480,7 +2522,6 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
-    contact?: SortOrderInput | SortOrder
     corporateName?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
@@ -2494,25 +2535,27 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     deliveryAddress?: SortOrderInput | SortOrder
     code?: SortOrderInput | SortOrder
-    code2?: SortOrderInput | SortOrder
-    code3?: SortOrderInput | SortOrder
-    code4?: SortOrderInput | SortOrder
     qnt?: SortOrderInput | SortOrder
-    qnt2?: SortOrderInput | SortOrder
-    qnt3?: SortOrderInput | SortOrder
-    qnt4?: SortOrderInput | SortOrder
     size?: SortOrderInput | SortOrder
-    size2?: SortOrderInput | SortOrder
-    size3?: SortOrderInput | SortOrder
-    size4?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    description2?: SortOrderInput | SortOrder
-    description3?: SortOrderInput | SortOrder
-    description4?: SortOrderInput | SortOrder
     cost?: SortOrderInput | SortOrder
+    code2?: SortOrderInput | SortOrder
+    qnt2?: SortOrderInput | SortOrder
+    size2?: SortOrderInput | SortOrder
+    description2?: SortOrderInput | SortOrder
     cost2?: SortOrderInput | SortOrder
+    code3?: SortOrderInput | SortOrder
+    qnt3?: SortOrderInput | SortOrder
+    size3?: SortOrderInput | SortOrder
+    description3?: SortOrderInput | SortOrder
     cost3?: SortOrderInput | SortOrder
+    code4?: SortOrderInput | SortOrder
+    qnt4?: SortOrderInput | SortOrder
+    size4?: SortOrderInput | SortOrder
+    description4?: SortOrderInput | SortOrder
     cost4?: SortOrderInput | SortOrder
+    observation?: SortOrderInput | SortOrder
+    discount?: SortOrderInput | SortOrder
     total?: SortOrderInput | SortOrder
     createdAt?: SortOrder
   }
@@ -2524,7 +2567,6 @@ export namespace Prisma {
     NOT?: OrderWhereInput | OrderWhereInput[]
     date?: StringNullableFilter<"Order"> | string | null
     type?: StringNullableFilter<"Order"> | string | null
-    contact?: StringNullableFilter<"Order"> | string | null
     corporateName?: StringNullableFilter<"Order"> | string | null
     phone?: StringNullableFilter<"Order"> | string | null
     address?: StringNullableFilter<"Order"> | string | null
@@ -2538,25 +2580,27 @@ export namespace Prisma {
     email?: StringNullableFilter<"Order"> | string | null
     deliveryAddress?: StringNullableFilter<"Order"> | string | null
     code?: StringNullableFilter<"Order"> | string | null
-    code2?: StringNullableFilter<"Order"> | string | null
-    code3?: StringNullableFilter<"Order"> | string | null
-    code4?: StringNullableFilter<"Order"> | string | null
     qnt?: StringNullableFilter<"Order"> | string | null
-    qnt2?: StringNullableFilter<"Order"> | string | null
-    qnt3?: StringNullableFilter<"Order"> | string | null
-    qnt4?: StringNullableFilter<"Order"> | string | null
     size?: StringNullableFilter<"Order"> | string | null
-    size2?: StringNullableFilter<"Order"> | string | null
-    size3?: StringNullableFilter<"Order"> | string | null
-    size4?: StringNullableFilter<"Order"> | string | null
     description?: StringNullableFilter<"Order"> | string | null
+    cost?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code2?: StringNullableFilter<"Order"> | string | null
+    qnt2?: StringNullableFilter<"Order"> | string | null
+    size2?: StringNullableFilter<"Order"> | string | null
     description2?: StringNullableFilter<"Order"> | string | null
+    cost2?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code3?: StringNullableFilter<"Order"> | string | null
+    qnt3?: StringNullableFilter<"Order"> | string | null
+    size3?: StringNullableFilter<"Order"> | string | null
     description3?: StringNullableFilter<"Order"> | string | null
+    cost3?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code4?: StringNullableFilter<"Order"> | string | null
+    qnt4?: StringNullableFilter<"Order"> | string | null
+    size4?: StringNullableFilter<"Order"> | string | null
     description4?: StringNullableFilter<"Order"> | string | null
-    cost?: StringNullableFilter<"Order"> | string | null
-    cost2?: StringNullableFilter<"Order"> | string | null
-    cost3?: StringNullableFilter<"Order"> | string | null
-    cost4?: StringNullableFilter<"Order"> | string | null
+    cost4?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    observation?: StringNullableFilter<"Order"> | string | null
+    discount?: DecimalNullableFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
     total?: StringNullableFilter<"Order"> | string | null
     createdAt?: DateTimeFilter<"Order"> | Date | string
   }, "id">
@@ -2565,7 +2609,6 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
-    contact?: SortOrderInput | SortOrder
     corporateName?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     address?: SortOrderInput | SortOrder
@@ -2579,25 +2622,27 @@ export namespace Prisma {
     email?: SortOrderInput | SortOrder
     deliveryAddress?: SortOrderInput | SortOrder
     code?: SortOrderInput | SortOrder
-    code2?: SortOrderInput | SortOrder
-    code3?: SortOrderInput | SortOrder
-    code4?: SortOrderInput | SortOrder
     qnt?: SortOrderInput | SortOrder
-    qnt2?: SortOrderInput | SortOrder
-    qnt3?: SortOrderInput | SortOrder
-    qnt4?: SortOrderInput | SortOrder
     size?: SortOrderInput | SortOrder
-    size2?: SortOrderInput | SortOrder
-    size3?: SortOrderInput | SortOrder
-    size4?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    description2?: SortOrderInput | SortOrder
-    description3?: SortOrderInput | SortOrder
-    description4?: SortOrderInput | SortOrder
     cost?: SortOrderInput | SortOrder
+    code2?: SortOrderInput | SortOrder
+    qnt2?: SortOrderInput | SortOrder
+    size2?: SortOrderInput | SortOrder
+    description2?: SortOrderInput | SortOrder
     cost2?: SortOrderInput | SortOrder
+    code3?: SortOrderInput | SortOrder
+    qnt3?: SortOrderInput | SortOrder
+    size3?: SortOrderInput | SortOrder
+    description3?: SortOrderInput | SortOrder
     cost3?: SortOrderInput | SortOrder
+    code4?: SortOrderInput | SortOrder
+    qnt4?: SortOrderInput | SortOrder
+    size4?: SortOrderInput | SortOrder
+    description4?: SortOrderInput | SortOrder
     cost4?: SortOrderInput | SortOrder
+    observation?: SortOrderInput | SortOrder
+    discount?: SortOrderInput | SortOrder
     total?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: OrderCountOrderByAggregateInput
@@ -2614,7 +2659,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Order"> | number
     date?: StringNullableWithAggregatesFilter<"Order"> | string | null
     type?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    contact?: StringNullableWithAggregatesFilter<"Order"> | string | null
     corporateName?: StringNullableWithAggregatesFilter<"Order"> | string | null
     phone?: StringNullableWithAggregatesFilter<"Order"> | string | null
     address?: StringNullableWithAggregatesFilter<"Order"> | string | null
@@ -2628,25 +2672,27 @@ export namespace Prisma {
     email?: StringNullableWithAggregatesFilter<"Order"> | string | null
     deliveryAddress?: StringNullableWithAggregatesFilter<"Order"> | string | null
     code?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    code2?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    code3?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    code4?: StringNullableWithAggregatesFilter<"Order"> | string | null
     qnt?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    qnt2?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    qnt3?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    qnt4?: StringNullableWithAggregatesFilter<"Order"> | string | null
     size?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    size2?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    size3?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    size4?: StringNullableWithAggregatesFilter<"Order"> | string | null
     description?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    cost?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code2?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    qnt2?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    size2?: StringNullableWithAggregatesFilter<"Order"> | string | null
     description2?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    cost2?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code3?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    qnt3?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    size3?: StringNullableWithAggregatesFilter<"Order"> | string | null
     description3?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    cost3?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    code4?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    qnt4?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    size4?: StringNullableWithAggregatesFilter<"Order"> | string | null
     description4?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    cost?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    cost2?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    cost3?: StringNullableWithAggregatesFilter<"Order"> | string | null
-    cost4?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    cost4?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
+    observation?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    discount?: DecimalNullableWithAggregatesFilter<"Order"> | Decimal | DecimalJsLike | number | string | null
     total?: StringNullableWithAggregatesFilter<"Order"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
   }
@@ -2654,7 +2700,6 @@ export namespace Prisma {
   export type OrderCreateInput = {
     date?: string | null
     type?: string | null
-    contact?: string | null
     corporateName?: string | null
     phone?: string | null
     address?: string | null
@@ -2668,25 +2713,27 @@ export namespace Prisma {
     email?: string | null
     deliveryAddress?: string | null
     code?: string | null
-    code2?: string | null
-    code3?: string | null
-    code4?: string | null
     qnt?: string | null
-    qnt2?: string | null
-    qnt3?: string | null
-    qnt4?: string | null
     size?: string | null
-    size2?: string | null
-    size3?: string | null
-    size4?: string | null
     description?: string | null
+    cost?: Decimal | DecimalJsLike | number | string | null
+    code2?: string | null
+    qnt2?: string | null
+    size2?: string | null
     description2?: string | null
+    cost2?: Decimal | DecimalJsLike | number | string | null
+    code3?: string | null
+    qnt3?: string | null
+    size3?: string | null
     description3?: string | null
+    cost3?: Decimal | DecimalJsLike | number | string | null
+    code4?: string | null
+    qnt4?: string | null
+    size4?: string | null
     description4?: string | null
-    cost?: string | null
-    cost2?: string | null
-    cost3?: string | null
-    cost4?: string | null
+    cost4?: Decimal | DecimalJsLike | number | string | null
+    observation?: string | null
+    discount?: Decimal | DecimalJsLike | number | string | null
     total?: string | null
     createdAt?: Date | string
   }
@@ -2695,7 +2742,6 @@ export namespace Prisma {
     id?: number
     date?: string | null
     type?: string | null
-    contact?: string | null
     corporateName?: string | null
     phone?: string | null
     address?: string | null
@@ -2709,25 +2755,27 @@ export namespace Prisma {
     email?: string | null
     deliveryAddress?: string | null
     code?: string | null
-    code2?: string | null
-    code3?: string | null
-    code4?: string | null
     qnt?: string | null
-    qnt2?: string | null
-    qnt3?: string | null
-    qnt4?: string | null
     size?: string | null
-    size2?: string | null
-    size3?: string | null
-    size4?: string | null
     description?: string | null
+    cost?: Decimal | DecimalJsLike | number | string | null
+    code2?: string | null
+    qnt2?: string | null
+    size2?: string | null
     description2?: string | null
+    cost2?: Decimal | DecimalJsLike | number | string | null
+    code3?: string | null
+    qnt3?: string | null
+    size3?: string | null
     description3?: string | null
+    cost3?: Decimal | DecimalJsLike | number | string | null
+    code4?: string | null
+    qnt4?: string | null
+    size4?: string | null
     description4?: string | null
-    cost?: string | null
-    cost2?: string | null
-    cost3?: string | null
-    cost4?: string | null
+    cost4?: Decimal | DecimalJsLike | number | string | null
+    observation?: string | null
+    discount?: Decimal | DecimalJsLike | number | string | null
     total?: string | null
     createdAt?: Date | string
   }
@@ -2735,7 +2783,6 @@ export namespace Prisma {
   export type OrderUpdateInput = {
     date?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
     corporateName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2749,25 +2796,27 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    code2?: NullableStringFieldUpdateOperationsInput | string | null
-    code3?: NullableStringFieldUpdateOperationsInput | string | null
-    code4?: NullableStringFieldUpdateOperationsInput | string | null
     qnt?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
-    size2?: NullableStringFieldUpdateOperationsInput | string | null
-    size3?: NullableStringFieldUpdateOperationsInput | string | null
-    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    cost?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code2?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
+    size2?: NullableStringFieldUpdateOperationsInput | string | null
     description2?: NullableStringFieldUpdateOperationsInput | string | null
+    cost2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code3?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
+    size3?: NullableStringFieldUpdateOperationsInput | string | null
     description3?: NullableStringFieldUpdateOperationsInput | string | null
+    cost3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code4?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
+    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description4?: NullableStringFieldUpdateOperationsInput | string | null
-    cost?: NullableStringFieldUpdateOperationsInput | string | null
-    cost2?: NullableStringFieldUpdateOperationsInput | string | null
-    cost3?: NullableStringFieldUpdateOperationsInput | string | null
-    cost4?: NullableStringFieldUpdateOperationsInput | string | null
+    cost4?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observation?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     total?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2776,7 +2825,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     date?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
     corporateName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2790,25 +2838,27 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    code2?: NullableStringFieldUpdateOperationsInput | string | null
-    code3?: NullableStringFieldUpdateOperationsInput | string | null
-    code4?: NullableStringFieldUpdateOperationsInput | string | null
     qnt?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
-    size2?: NullableStringFieldUpdateOperationsInput | string | null
-    size3?: NullableStringFieldUpdateOperationsInput | string | null
-    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    cost?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code2?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
+    size2?: NullableStringFieldUpdateOperationsInput | string | null
     description2?: NullableStringFieldUpdateOperationsInput | string | null
+    cost2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code3?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
+    size3?: NullableStringFieldUpdateOperationsInput | string | null
     description3?: NullableStringFieldUpdateOperationsInput | string | null
+    cost3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code4?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
+    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description4?: NullableStringFieldUpdateOperationsInput | string | null
-    cost?: NullableStringFieldUpdateOperationsInput | string | null
-    cost2?: NullableStringFieldUpdateOperationsInput | string | null
-    cost3?: NullableStringFieldUpdateOperationsInput | string | null
-    cost4?: NullableStringFieldUpdateOperationsInput | string | null
+    cost4?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observation?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     total?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2817,7 +2867,6 @@ export namespace Prisma {
     id?: number
     date?: string | null
     type?: string | null
-    contact?: string | null
     corporateName?: string | null
     phone?: string | null
     address?: string | null
@@ -2831,25 +2880,27 @@ export namespace Prisma {
     email?: string | null
     deliveryAddress?: string | null
     code?: string | null
-    code2?: string | null
-    code3?: string | null
-    code4?: string | null
     qnt?: string | null
-    qnt2?: string | null
-    qnt3?: string | null
-    qnt4?: string | null
     size?: string | null
-    size2?: string | null
-    size3?: string | null
-    size4?: string | null
     description?: string | null
+    cost?: Decimal | DecimalJsLike | number | string | null
+    code2?: string | null
+    qnt2?: string | null
+    size2?: string | null
     description2?: string | null
+    cost2?: Decimal | DecimalJsLike | number | string | null
+    code3?: string | null
+    qnt3?: string | null
+    size3?: string | null
     description3?: string | null
+    cost3?: Decimal | DecimalJsLike | number | string | null
+    code4?: string | null
+    qnt4?: string | null
+    size4?: string | null
     description4?: string | null
-    cost?: string | null
-    cost2?: string | null
-    cost3?: string | null
-    cost4?: string | null
+    cost4?: Decimal | DecimalJsLike | number | string | null
+    observation?: string | null
+    discount?: Decimal | DecimalJsLike | number | string | null
     total?: string | null
     createdAt?: Date | string
   }
@@ -2857,7 +2908,6 @@ export namespace Prisma {
   export type OrderUpdateManyMutationInput = {
     date?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
     corporateName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2871,25 +2921,27 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    code2?: NullableStringFieldUpdateOperationsInput | string | null
-    code3?: NullableStringFieldUpdateOperationsInput | string | null
-    code4?: NullableStringFieldUpdateOperationsInput | string | null
     qnt?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
-    size2?: NullableStringFieldUpdateOperationsInput | string | null
-    size3?: NullableStringFieldUpdateOperationsInput | string | null
-    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    cost?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code2?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
+    size2?: NullableStringFieldUpdateOperationsInput | string | null
     description2?: NullableStringFieldUpdateOperationsInput | string | null
+    cost2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code3?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
+    size3?: NullableStringFieldUpdateOperationsInput | string | null
     description3?: NullableStringFieldUpdateOperationsInput | string | null
+    cost3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code4?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
+    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description4?: NullableStringFieldUpdateOperationsInput | string | null
-    cost?: NullableStringFieldUpdateOperationsInput | string | null
-    cost2?: NullableStringFieldUpdateOperationsInput | string | null
-    cost3?: NullableStringFieldUpdateOperationsInput | string | null
-    cost4?: NullableStringFieldUpdateOperationsInput | string | null
+    cost4?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observation?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     total?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2898,7 +2950,6 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     date?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
-    contact?: NullableStringFieldUpdateOperationsInput | string | null
     corporateName?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     address?: NullableStringFieldUpdateOperationsInput | string | null
@@ -2912,25 +2963,27 @@ export namespace Prisma {
     email?: NullableStringFieldUpdateOperationsInput | string | null
     deliveryAddress?: NullableStringFieldUpdateOperationsInput | string | null
     code?: NullableStringFieldUpdateOperationsInput | string | null
-    code2?: NullableStringFieldUpdateOperationsInput | string | null
-    code3?: NullableStringFieldUpdateOperationsInput | string | null
-    code4?: NullableStringFieldUpdateOperationsInput | string | null
     qnt?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
-    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
     size?: NullableStringFieldUpdateOperationsInput | string | null
-    size2?: NullableStringFieldUpdateOperationsInput | string | null
-    size3?: NullableStringFieldUpdateOperationsInput | string | null
-    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    cost?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code2?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt2?: NullableStringFieldUpdateOperationsInput | string | null
+    size2?: NullableStringFieldUpdateOperationsInput | string | null
     description2?: NullableStringFieldUpdateOperationsInput | string | null
+    cost2?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code3?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt3?: NullableStringFieldUpdateOperationsInput | string | null
+    size3?: NullableStringFieldUpdateOperationsInput | string | null
     description3?: NullableStringFieldUpdateOperationsInput | string | null
+    cost3?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    code4?: NullableStringFieldUpdateOperationsInput | string | null
+    qnt4?: NullableStringFieldUpdateOperationsInput | string | null
+    size4?: NullableStringFieldUpdateOperationsInput | string | null
     description4?: NullableStringFieldUpdateOperationsInput | string | null
-    cost?: NullableStringFieldUpdateOperationsInput | string | null
-    cost2?: NullableStringFieldUpdateOperationsInput | string | null
-    cost3?: NullableStringFieldUpdateOperationsInput | string | null
-    cost4?: NullableStringFieldUpdateOperationsInput | string | null
+    cost4?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    observation?: NullableStringFieldUpdateOperationsInput | string | null
+    discount?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     total?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2960,6 +3013,17 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type DecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -2980,7 +3044,6 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     type?: SortOrder
-    contact?: SortOrder
     corporateName?: SortOrder
     phone?: SortOrder
     address?: SortOrder
@@ -2994,38 +3057,44 @@ export namespace Prisma {
     email?: SortOrder
     deliveryAddress?: SortOrder
     code?: SortOrder
-    code2?: SortOrder
-    code3?: SortOrder
-    code4?: SortOrder
     qnt?: SortOrder
-    qnt2?: SortOrder
-    qnt3?: SortOrder
-    qnt4?: SortOrder
     size?: SortOrder
-    size2?: SortOrder
-    size3?: SortOrder
-    size4?: SortOrder
     description?: SortOrder
-    description2?: SortOrder
-    description3?: SortOrder
-    description4?: SortOrder
     cost?: SortOrder
+    code2?: SortOrder
+    qnt2?: SortOrder
+    size2?: SortOrder
+    description2?: SortOrder
     cost2?: SortOrder
+    code3?: SortOrder
+    qnt3?: SortOrder
+    size3?: SortOrder
+    description3?: SortOrder
     cost3?: SortOrder
+    code4?: SortOrder
+    qnt4?: SortOrder
+    size4?: SortOrder
+    description4?: SortOrder
     cost4?: SortOrder
+    observation?: SortOrder
+    discount?: SortOrder
     total?: SortOrder
     createdAt?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
     id?: SortOrder
+    cost?: SortOrder
+    cost2?: SortOrder
+    cost3?: SortOrder
+    cost4?: SortOrder
+    discount?: SortOrder
   }
 
   export type OrderMaxOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
     type?: SortOrder
-    contact?: SortOrder
     corporateName?: SortOrder
     phone?: SortOrder
     address?: SortOrder
@@ -3039,25 +3108,27 @@ export namespace Prisma {
     email?: SortOrder
     deliveryAddress?: SortOrder
     code?: SortOrder
-    code2?: SortOrder
-    code3?: SortOrder
-    code4?: SortOrder
     qnt?: SortOrder
-    qnt2?: SortOrder
-    qnt3?: SortOrder
-    qnt4?: SortOrder
     size?: SortOrder
-    size2?: SortOrder
-    size3?: SortOrder
-    size4?: SortOrder
     description?: SortOrder
-    description2?: SortOrder
-    description3?: SortOrder
-    description4?: SortOrder
     cost?: SortOrder
+    code2?: SortOrder
+    qnt2?: SortOrder
+    size2?: SortOrder
+    description2?: SortOrder
     cost2?: SortOrder
+    code3?: SortOrder
+    qnt3?: SortOrder
+    size3?: SortOrder
+    description3?: SortOrder
     cost3?: SortOrder
+    code4?: SortOrder
+    qnt4?: SortOrder
+    size4?: SortOrder
+    description4?: SortOrder
     cost4?: SortOrder
+    observation?: SortOrder
+    discount?: SortOrder
     total?: SortOrder
     createdAt?: SortOrder
   }
@@ -3066,7 +3137,6 @@ export namespace Prisma {
     id?: SortOrder
     date?: SortOrder
     type?: SortOrder
-    contact?: SortOrder
     corporateName?: SortOrder
     phone?: SortOrder
     address?: SortOrder
@@ -3080,31 +3150,38 @@ export namespace Prisma {
     email?: SortOrder
     deliveryAddress?: SortOrder
     code?: SortOrder
-    code2?: SortOrder
-    code3?: SortOrder
-    code4?: SortOrder
     qnt?: SortOrder
-    qnt2?: SortOrder
-    qnt3?: SortOrder
-    qnt4?: SortOrder
     size?: SortOrder
-    size2?: SortOrder
-    size3?: SortOrder
-    size4?: SortOrder
     description?: SortOrder
-    description2?: SortOrder
-    description3?: SortOrder
-    description4?: SortOrder
     cost?: SortOrder
+    code2?: SortOrder
+    qnt2?: SortOrder
+    size2?: SortOrder
+    description2?: SortOrder
     cost2?: SortOrder
+    code3?: SortOrder
+    qnt3?: SortOrder
+    size3?: SortOrder
+    description3?: SortOrder
     cost3?: SortOrder
+    code4?: SortOrder
+    qnt4?: SortOrder
+    size4?: SortOrder
+    description4?: SortOrder
     cost4?: SortOrder
+    observation?: SortOrder
+    discount?: SortOrder
     total?: SortOrder
     createdAt?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
     id?: SortOrder
+    cost?: SortOrder
+    cost2?: SortOrder
+    cost3?: SortOrder
+    cost4?: SortOrder
+    discount?: SortOrder
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -3140,6 +3217,22 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[]
@@ -3156,6 +3249,14 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type NullableDecimalFieldUpdateOperationsInput = {
+    set?: Decimal | DecimalJsLike | number | string | null
+    increment?: Decimal | DecimalJsLike | number | string
+    decrement?: Decimal | DecimalJsLike | number | string
+    multiply?: Decimal | DecimalJsLike | number | string
+    divide?: Decimal | DecimalJsLike | number | string
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -3193,6 +3294,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -3259,6 +3371,22 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel> | null
+    in?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    notIn?: Decimal[] | DecimalJsLike[] | number[] | string[] | null
+    lt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    lte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gt?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    gte?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
+    not?: NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedDecimalNullableFilter<$PrismaModel>
+    _sum?: NestedDecimalNullableFilter<$PrismaModel>
+    _min?: NestedDecimalNullableFilter<$PrismaModel>
+    _max?: NestedDecimalNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

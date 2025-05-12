@@ -3,6 +3,17 @@ import { Input } from "@heroui/input";
 import { useEffect, useState } from "react";
 import { Select, SelectItem } from "@heroui/select";
 import { Autocomplete, AutocompleteItem } from "@heroui/autocomplete";
+import bags from "@/config/bagsData"
+import { input } from "@heroui/theme";
+import { formatPhone, formatCPF, formatCNPJ, formatCEP, formatIE } from "@/config/formats";
+
+interface bags {
+  code: string;
+  size: string;
+  description: string;
+  price500: number;
+  price1000: number;
+}
 
 interface InputProps {
   name?: string;
@@ -19,19 +30,29 @@ interface InputProps {
   index?: number;
   discount?: React.Dispatch<React.SetStateAction<number>>
   code?: (index: number, value: string) => void;
+  quantity?: (index: number, value: string) => void;
+  setActualBag?: (index: number, value: bags) => void;
 }
 
-export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index, discount, code }: InputProps) {
+export default function OrderInput({ name, width, id, disabled, fixedValue, type, noBorder, value, cost, size, description, index, discount, code, quantity, setActualBag }: InputProps) {
   const date = new Date();
   const day = date.getDate().toString().padStart(2, "0");
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const year = date.getFullYear();
   const fullDate = `${day}/${month}/${year}`;
   const selectBox = ["Order", "Budget"];
-  const bags = [{ code: "018", size: "20x40", description: "paper craft" }, { code: "049", size: "30x40", description: "plastic" }, { code: "012", size: "20x30", description: "plastic" }];
-  const [inputValue, setInputValue] = useState(name === "DATE" ? fullDate : type === "select" ? selectBox[0] : type === "autoComplete" ? bags[0].code : fixedValue || "");
+  const [inputValue, setInputValue] = useState(name === "DATE" ? fullDate : type === "select" ? selectBox[0] : fixedValue || "");
   const [error, setError] = useState("");
 
+  const handleChange = (val: string) => {
+    if (id === "phone") { setInputValue(formatPhone(val)); }
+    else if (id === "cpfCnpj" && val.length < 11) { setInputValue(formatCPF(val)); }
+    else if (id === "cpfCnpj" && val.length > 11) { setInputValue(formatCNPJ(val)); }
+    else if (id === "cep") { setInputValue(formatCEP(val)); }
+    else if (id === "ie") { setInputValue(formatIE(val)); }
+    else if (id === "state") { setInputValue(val.toUpperCase()); }
+    else { setInputValue(val); }
+  }
   useEffect(() => {
     if (value !== undefined) {
       setInputValue(value);
@@ -42,8 +63,12 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
     <>
       {type === "autoComplete" && (
         <div className={`relative ${width}`}>
-          <Autocomplete maxLength={3} onKeyDown={(e) => { if (!/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); } }}  inputValue={inputValue}
-            onSelectionChange={(value) => { setInputValue(value as string); const selectedBag = bags.find(bag => bag.code === value); if (selectedBag && size) size(index || 0, selectedBag.size); if (selectedBag && description) description(index || 0, selectedBag.description); }} className={`h-[38px]`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-b-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0' }}>
+          <Autocomplete maxLength={3} onInputChange={(value) => setInputValue(value)} onKeyDown={(e) => { if (!/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); } }} inputValue={inputValue}
+            onSelectionChange={(value) => {
+              setInputValue(value as string); const selectedBag = bags.find(bag => bag.code === value); setActualBag && selectedBag && setActualBag(index || 0, selectedBag);
+              if (selectedBag && size) size(index || 0, selectedBag.size); if (selectedBag && description) description(index || 0, selectedBag.description); if (selectedBag && quantity) quantity(index || 0, "500");
+            }}
+            className={`h-[38px]`} radius="none" style={{ padding: '0' }} classNames={{ base: 'border-r-2 border-b-2 border-gray-600', clearButton: 'hidden', selectorButton: 'hidden', popoverContent: 'p-0' }}>
             {bags.map((value) => (
               <AutocompleteItem hideSelectedIcon key={value.code}>{value.code}</AutocompleteItem>
             ))}
@@ -85,6 +110,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
                 setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
               }
             }}
+            maxLength={id === "state" ? 3 : 200}
             placeholder={error}
             variant="bordered"
             radius="lg"
@@ -93,7 +119,7 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
             id={id}
             color="default"
             value={inputValue}
-            onChange={(e) => { setInputValue(e.target.value); setError(""); }}
+            onChange={(e) => { handleChange(e.target.value); setError(""); }}
             className={`w-full place-self-center rounded-xl border-gray-500 flex relative h-[45px] ${id === "discount" && "absolute left-[-200px] top-0"}`}
             classNames={{
               inputWrapper: `border-gray-600 ${error && "data-[hover=true]:bg-red-200"}`,
@@ -110,12 +136,16 @@ export default function OrderInput({ name, width, id, disabled, fixedValue, type
             onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
               if ((!id?.includes("description") && id !== "observation") && !/[0-9]|[,.]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); }
               if ((name === "discount") && !/[0-9]|Backspace|Tab|ArrowLeft|ArrowRight/.test(e.key)) { e.preventDefault(); }
-            }} onBlur={() => {
+            }}
+            onBlur={() => {
               if (inputValue === "" && name && name !== "observation" && id !== "discount") {
                 setError(`${(name.charAt(0).toUpperCase() + name.slice(1).toLowerCase())} is required`);
               }
               if (id?.includes("cost") && cost) {
                 cost(index || 0, parseFloat(inputValue.replace(",", ".")));
+              }
+              if (id?.includes("qnt")) {
+                quantity?.(index || 0, inputValue);
               }
               if (id === "discount" && discount) {
                 name === "discount" ? discount(parseFloat(inputValue.replace(",", ".")) / 100) : discount(parseFloat(inputValue.replace(",", ".")))

@@ -53,10 +53,10 @@ export default function OrdersList({ onCopy, onDelete, setOrdersLength }: { onCo
                             <IoBagHandleOutline size={42} />
                             <div className="flex flex-col">
                                 <p>{order.corporateName}</p>
-                                <p className="text-gray-500 text-sm">{order.size} - {order.qnt} - R${order.cost} </p>
-                                {order.code2 && <p className="text-gray-500 text-sm"> {order.size2} - {order.qnt2} - R${order.cost2}</p>}
-                                {order.code3 && <p className="text-gray-500 text-sm">{order.size3} - {order.qnt3} - R${order.cost3}</p>}
-                                {order.code4 && <p className="text-gray-500 text-sm">{order.size4} - {order.qnt4} - R${order.cost4}</p>}
+                                <p className="text-gray-500 text-sm">{order.size} - {order.qnt} - ${order.cost} </p>
+                                {order.code2 && <p className="text-gray-500 text-sm"> {order.size2} - {order.qnt2} - ${order.cost2}</p>}
+                                {order.code3 && <p className="text-gray-500 text-sm">{order.size3} - {order.qnt3} - ${order.cost3}</p>}
+                                {order.code4 && <p className="text-gray-500 text-sm">{order.size4} - {order.qnt4} - ${order.cost4}</p>}
                             </div>
                             {hoverIndex === index && (<>
                                 <Button className="w-[40px] min-w-2 h-[40px] ml-auto p-0" radius="full" onPress={() => openInfoModal(order)} aria-labelledby="View order">

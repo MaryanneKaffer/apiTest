@@ -78,7 +78,7 @@ export default function InfoModal({
                       </>
                     )}
                     <p className="text-md" key={key}>
-                      {labels[key] || key}: {key.includes("cost") && "R$"}{String(value)}
+                      {labels[key] || key}: {key.includes("cost") && "$"}{String(value)}
                     </p>
                   </>
                 );

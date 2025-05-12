@@ -15,7 +15,7 @@ export function formatPhone(value: string) {
 }
 
 export function formatCPF(value: string) {
-    const digits = value.replace(/\D/g, "").slice(0, 11); 
+    const digits = value.replace(/\D/g, "").slice(0, 11);
     const match = digits.match(/^(\d{0,3})(\d{0,3})(\d{0,3})(\d{0,2})$/);
 
     if (!match) return value;
@@ -44,6 +44,7 @@ export function formatCNPJ(value: string) {
 
     return result;
 }
+
 export function formatCEP(value: string) {
     const digits = value.replace(/\D/g, "").slice(0, 8);
     const match = digits.match(/^(\d{0,5})(\d{0,3})$/);
@@ -66,3 +67,11 @@ export function formatIE(value: string) {
         .replace(/^(\d{3})\.(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3.$4-$5");
 }
 
+export const formatter = (id: any, val: string, setInputValue: React.Dispatch<React.SetStateAction<string>>) => {
+    if (id === "phone") { setInputValue(formatPhone(val)); }
+    else if (id === "cpfCnpj") { setInputValue(val.length <= 11 ? formatCPF(val) : formatCNPJ(val)) }
+    else if (id === "cep") { setInputValue(formatCEP(val)); }
+    else if (id === "ie") { setInputValue(formatIE(val)); }
+    else if (id === "state") { setInputValue(val.toUpperCase()); }
+    else { setInputValue(val); }
+}

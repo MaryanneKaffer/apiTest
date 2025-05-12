@@ -9,6 +9,8 @@ import { MdDiscount } from "react-icons/md";
 import OrdersList from "./components/ordersList";
 import OrderInput from "./components/inputComponent";
 import { Select, SelectItem } from "@heroui/select";
+import { Copy, Submit, Delete } from "@/config/apiLogic";
+import { Clear, updateBagAtIndex, updateCostAtIndex, updateDescriptionAtIndex, updateQntAtIndex, updateSizeAtIndex } from "@/config/formLogic";
 
 interface bags {
   code: string;
@@ -75,182 +77,16 @@ export default function Home() {
   const [actualBag, setActualBag] = useState<bags[]>([]);
   const [columns, setColumns] = useState(1);
 
-  const updateBagAtIndex = (index: number, value: bags) => {
-    setActualBag(prev => {
-      const newBag = [...prev];
-      newBag[index] = value;
-      return newBag;
-    });
-  };
+  const handleSubmit = () => { Submit(document.querySelectorAll("input, select, textarea")) }
+  const handleCopy = (order: OrderFormData) => { Copy(order, setFormData, setColumns, setDiscountActive, setObsActive, setCost, setSize, setDescription, setQnt) };
+  const handleDelete = (order: OrderFormData) => { Delete(order) };
 
-  const updateSizeAtIndex = (index: number, value: string) => {
-    setSize(prev => {
-      const newSize = [...prev];
-      newSize[index] = value;
-      return newSize;
-    });
-  };
-
-  const updateDescriptionAtIndex = (index: number, value: string) => {
-    setDescription(prev => {
-      const newDescription = [...prev];
-      newDescription[index] = value;
-      return newDescription;
-    });
-  };
-
-  const updateCostAtIndex = (index: number, value: number) => {
-    setCost(prev => {
-      const newCost = [...prev];
-      if (isNaN(value)) {
-        newCost[index] = 0;
-      } else {
-        newCost[index] = value;
-      }
-      return newCost;
-    });
-  };
-
-  const updateQntAtIndex = (index: number, value: string) => {
-    setQnt(prev => {
-      const newQnt = [...prev];
-      newQnt[index] = value;
-      return newQnt;
-    });
-  };
-
-  const handleCopy = (order: any) => {
-    setFormData(order);
-
-    order.discount ? setDiscountActive(true) : setDiscountActive(false);
-    order.observation ? setObsActive(true) : setObsActive(false);
-
-    order.code && setColumns(1);
-    order.code2 && setColumns(2);
-    order.code3 && setColumns(3);
-    order.code4 && setColumns(4);
-
-    setCost([
-      parseFloat(order.cost) || 0,
-      parseFloat(order.cost2) || 0,
-      parseFloat(order.cost3) || 0,
-      parseFloat(order.cost4) || 0
-    ]);
-
-    setSize([
-      order.size || "",
-      order.size2 || "",
-      order.size3 || "",
-      order.size4 || ""
-    ]);
-
-    setDescription([
-      order.description || "",
-      order.description2 || "",
-      order.description3 || "",
-      order.description4 || ""
-    ]);
-
-    setQnt([
-      order.qnt || "",
-      order.qnt2 || "",
-      order.qnt3 || "",
-      order.qnt4 || ""
-    ]);
-  };
-
-  async function handleDelete(order: any) {
-    try {
-      const res = await fetch(`/api/orders`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: order.id }),
-      });
-
-      if (res.ok) {
-        alert("Order deleted successfully!");
-        window.location.reload();
-      } else {
-        alert("Failed: " + res.status);
-      }
-    } catch (error) {
-      alert("Failed: " + error);
-    }
-  }
-
-  async function handleSubmit() {
-    const validKeys = [
-      "type", "corporateName", "phone", "address", "city", "state",
-      "cep", "cpfCnpj", "ie", "district", "payment", "email", "deliveryAddress",
-      "code", "code2", "code3", "code4",
-      "qnt", "qnt2", "qnt3", "qnt4",
-      "size", "size2", "size3", "size4",
-      "description", "description2", "description3", "description4",
-      "cost", "cost2", "cost3", "cost4", "discount",
-      "observation", "total"
-    ];
-
-    const formElements = document.querySelectorAll("input, select, textarea");
-    const data: Record<string, string> = {};
-    const missingFields: string[] = [];
-
-    Array.from(formElements).forEach((el) => {
-      const element = el as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-      const id = element.id;
-
-      if (!validKeys.includes(id)) return;
-      if (element.disabled) return;
-
-      if (!element.value) {
-        missingFields.push(id);
-      } else {
-        data[id] = element.value;
-      }
-    });
-
-    if (missingFields.length > 0) {
-      alert(`The following fields are required: ${missingFields.join(", ")}`);
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (res.ok) {
-        alert("Order created successfully!");
-        window.location.reload();
-      } else {
-        alert("Failed: " + res.status);
-      }
-    } catch (error) {
-      alert("Failed: " + error);
-    }
-  }
-
-  const clear = () => {
-    const formElements = document.querySelectorAll("input, select, textarea"); formElements.forEach((el) => {
-      const element = el as HTMLInputElement;
-      if (element.id !== "date") {
-        setFormData((prev) => ({ ...prev, [element.id]: "" }));
-      }
-    })
-  }
+  const handleClear = () => { Clear({ formElements: document.querySelectorAll("input, select, textarea"), setFormData, setCost, setQnt, setDescription, setSize, setActualBag }) };
 
   useEffect(() => {
     qnt.forEach((q, i) => {
-      if (q === "500" && actualBag[i]) {
-        updateCostAtIndex(i, actualBag[i].price500);
-      } else if (q === "1000" && actualBag[i]) {
-        updateCostAtIndex(i, actualBag[i].price1000);
-      } else {
-        updateCostAtIndex(i, 0);
-      }
+      if (q === "500" && actualBag[i]) { updateCostAtIndex(i, actualBag[i].price500, setCost) }
+      else if (q === "1000" && actualBag[i]) { updateCostAtIndex(i, actualBag[i].price1000, setCost) }
     });
   }, [qnt, actualBag]);
 
@@ -280,7 +116,7 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-1 w-[50%]">
             <OrderInput name="DATE" width="w-[100%]" id="date" />
             <OrderInput width="w-[100%]" id="type" type={"select"} value={formData.type} />
-            {ordersLength > 0 ? <OrderInput width="w-[100%]" disabled={true} fixedValue={`Order N°${ordersLength + 1}`} /> : <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]">...</div>}
+            {ordersLength > 0 ? <OrderInput width="w-[100%]" fixedValue={`Order N°${ordersLength + 1}`} /> : <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]">...</div>}
             <div className="w-full h-[45px] border-2 rounded-xl border-gray-600 relative h-[47px] rounded-xl text-center text-sm flex flex-col justify-center leading-[14px]">
               <p>Contact</p>
               <p>Sample</p>
@@ -288,26 +124,26 @@ export default function Home() {
           </div>
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="CORPORATE NAME" width="w-[68%]" id="corporateName" value={formData.corporateName ?? ""} />
-          <OrderInput name="PHONE" width="w-[32%]" id="phone" type="number" value={formData.phone ?? ""} />
+          <OrderInput name="CORPORATE NAME" width="w-[68%]" id="corporateName" value={formData.corporateName} />
+          <OrderInput name="PHONE" width="w-[32%]" id="phone" type="number" value={formData.phone} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="ADDRESS" width="w-[60%]" id="address" value={formData.address ?? ""} />
-          <OrderInput name="CITY" width="w-[30%]" id="city" type="text" value={formData.city ?? ""} />
-          <OrderInput name="UF" width="w-[10%]" id="state" type="text" value={formData.state ?? ""} />
+          <OrderInput name="ADDRESS" width="w-[60%]" id="address" value={formData.address} />
+          <OrderInput name="CITY" width="w-[30%]" id="city" type="text" value={formData.city} />
+          <OrderInput name="UF" width="w-[10%]" id="state" type="text" value={formData.state} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="CEP" width="w-[30%]" id="cep" type="number" value={formData.cep ?? ""} />
-          <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" type="number" value={formData.cpfCnpj ?? ""} />
-          <OrderInput name="IE" width="w-[30%]" id="ie" type="number" value={formData.ie ?? ""} />
+          <OrderInput name="CEP" width="w-[30%]" id="cep" type="number" value={formData.cep} />
+          <OrderInput name="CPFCNPJ" width="w-[40%]" id="cpfCnpj" type="number" value={formData.cpfCnpj} />
+          <OrderInput name="IE" width="w-[30%]" id="ie" type="number" value={formData.ie} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="DISTRICT" width="w-[28%]" id="district" type="text" value={formData.district ?? ""} />
-          <OrderInput name="PAYMENT" width="w-[28%]" id="payment" value={formData.payment ?? ""} />
-          <OrderInput name="E-MAIL" width="w-[44%]" id="email" value={formData.email ?? ""} />
+          <OrderInput name="DISTRICT" width="w-[28%]" id="district" type="text" value={formData.district} />
+          <OrderInput name="PAYMENT" width="w-[28%]" id="payment" value={formData.payment} />
+          <OrderInput name="E-MAIL" width="w-[44%]" id="email" value={formData.email} />
         </div>
         <div className="w-[700px] h-[50px] flex gap-1">
-          <OrderInput name="DELIVERY ADDRESS" width="w-full" id="deliveryAddress" value={formData.deliveryAddress ?? ""} />
+          <OrderInput name="DELIVERY ADDRESS" width="w-full" id="deliveryAddress" value={formData.deliveryAddress} />
         </div>
         <div className="w-[700px] h-auto flex flex-col border-2 border-gray-600 rounded-xl">
           <div className="w-full h-[40px] flex text-sm">
@@ -318,38 +154,50 @@ export default function Home() {
             <span className="w-[10%] px-2 h-[40px] border-gray-500 flex justify-center items-center"> COST </span>
           </div>
           <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-            <OrderInput name="CODE" width="w-[8%]" id="code" type={"autoComplete"} value={formData.code} size={updateSizeAtIndex} description={updateDescriptionAtIndex} quantity={updateQntAtIndex} setActualBag={updateBagAtIndex} index={0} />
-            <OrderInput name="QNT" width="w-[10%]" id="qnt" type={"description"} value={formData.qnt} quantity={updateQntAtIndex} />
+            <OrderInput name="CODE" width="w-[8%]" id="code" type={"autoComplete"} value={formData.code}
+              size={(index, value) => updateSizeAtIndex(index, value, setSize)} description={(index, value) => updateDescriptionAtIndex(index, value, setDescription)}
+              quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} setActualBag={(index, value) => updateBagAtIndex(index, value, setActualBag)} index={0} />
+
+            <OrderInput name="QNT" width="w-[10%]" id="qnt" type={"description"} value={formData.qnt} quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} />
             <OrderInput name="SIZE" width="w-[12%]" id="size" type={"description"} value={formData.size} />
             <OrderInput name="DESCRIPTION" width="w-[60%]" id="description" type={"description"} value={formData.description} />
-            <OrderInput name="COST" width="w-[10%]" id="cost" type={"description"} noBorder={true} value={Number(formData.cost).toFixed(2)} cost={updateCostAtIndex} index={0} />
+            <OrderInput name="COST" width="w-[10%]" id="cost" type={"description"} noBorder={true} value={Number(formData.cost).toFixed(2)} cost={(index, value) => updateCostAtIndex(index, value, setCost)} index={0} />
           </div>
           {columns > 1 && (
             <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-              <OrderInput name="CODE2" width="w-[8%]" id="code2" type={"autoComplete"} value={formData.code2} size={updateSizeAtIndex} description={updateDescriptionAtIndex} quantity={updateQntAtIndex} setActualBag={updateBagAtIndex} index={1} />
-              <OrderInput name="QNT2" width="w-[10%]" id="qnt2" type={"description"} value={formData.qnt2} quantity={updateQntAtIndex} />
+              <OrderInput name="CODE2" width="w-[8%]" id="code2" type={"autoComplete"} value={formData.code2}
+                size={(index, value) => updateSizeAtIndex(index, value, setSize)} description={(index, value) => updateDescriptionAtIndex(index, value, setDescription)}
+                quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} setActualBag={(index, value) => updateBagAtIndex(index, value, setActualBag)} index={1} />
+
+              <OrderInput name="QNT2" width="w-[10%]" id="qnt2" type={"description"} value={formData.qnt2} quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} />
               <OrderInput name="SIZE2" width="w-[12%]" id="size2" type={"description"} value={formData.size2} />
               <OrderInput name="DESCRIPTION2" width="w-[60%]" id="description2" type={"description"} value={formData.description2} />
-              <OrderInput name="COST2" width="w-[10%]" id="cost2" type={"description"} noBorder={true} value={Number(formData.cost2).toFixed(2)} cost={updateCostAtIndex} index={1} />
+              <OrderInput name="COST2" width="w-[10%]" id="cost2" type={"description"} noBorder={true} value={Number(formData.cost2).toFixed(2)} cost={(index, value) => updateCostAtIndex(index, value, setCost)} index={1} />
             </div>)}
           {columns > 2 && (
             <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-              <OrderInput name="CODE3" width="w-[8%]" id="code3" type={"autoComplete"} value={formData.code3} size={updateSizeAtIndex} description={updateDescriptionAtIndex} quantity={updateQntAtIndex} setActualBag={updateBagAtIndex} index={2} />
-              <OrderInput name="QNT3" width="w-[10%]" id="qnt3" type={"description"} value={formData.qnt3} quantity={updateQntAtIndex} />
+              <OrderInput name="CODE3" width="w-[8%]" id="code3" type={"autoComplete"} value={formData.code3}
+                size={(index, value) => updateSizeAtIndex(index, value, setSize)} description={(index, value) => updateDescriptionAtIndex(index, value, setDescription)}
+                quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} setActualBag={(index, value) => updateBagAtIndex(index, value, setActualBag)} index={2} />
+
+              <OrderInput name="QNT3" width="w-[10%]" id="qnt3" type={"description"} value={formData.qnt3} quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} />
               <OrderInput name="SIZE3" width="w-[12%]" id="size3" type={"description"} value={formData.size3} />
               <OrderInput name="DESCRIPTION3" width="w-[60%]" id="description3" type={"description"} value={formData.description3} />
-              <OrderInput name="COST3" width="w-[10%]" id="cost3" type={"description"} noBorder={true} value={Number(formData.cost3).toFixed(2)} cost={updateCostAtIndex} index={2} />
+              <OrderInput name="COST3" width="w-[10%]" id="cost3" type={"description"} noBorder={true} value={Number(formData.cost3).toFixed(2)} cost={(index, value) => updateCostAtIndex(index, value, setCost)} index={2} />
             </div>)}
           {columns > 3 && (
             <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-              <OrderInput name="CODE4" width="w-[8%]" id="code4" type={"autoComplete"} value={formData.code4} size={updateSizeAtIndex} description={updateDescriptionAtIndex} quantity={updateQntAtIndex} setActualBag={updateBagAtIndex} index={3} />
-              <OrderInput name="QNT4" width="w-[10%]" id="qnt4" type={"description"} value={formData.qnt4} quantity={updateQntAtIndex} />
+              <OrderInput name="CODE4" width="w-[8%]" id="code4" type={"autoComplete"} value={formData.code4}
+                size={(index, value) => updateSizeAtIndex(index, value, setSize)} description={(index, value) => updateDescriptionAtIndex(index, value, setDescription)}
+                quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} setActualBag={(index, value) => updateBagAtIndex(index, value, setActualBag)} index={3} />
+
+              <OrderInput name="QNT4" width="w-[10%]" id="qnt4" type={"description"} value={formData.qnt4} quantity={(index, value) => updateQntAtIndex(index, value, setQnt)} />
               <OrderInput name="SIZE4" width="w-[12%]" id="size4" type={"description"} value={formData.size4} />
               <OrderInput name="DESCRIPTION4" width="w-[60%]" id="description4" type={"description"} value={formData.description4} />
-              <OrderInput name="COST4" width="w-[10%]" id="cost4" type={"description"} noBorder={true} value={Number(formData.cost4).toFixed(2)} cost={updateCostAtIndex} index={3} />
+              <OrderInput name="COST4" width="w-[10%]" id="cost4" type={"description"} noBorder={true} value={Number(formData.cost4).toFixed(2)} cost={(index, value) => updateCostAtIndex(index, value, setCost)} index={3} />
             </div>)}
           {obsActive && <div className="w-full h-[40px] border-t-2 border-gray-600 flex place-items-center">
-            <OrderInput name="observation" width="w-[100%]" noBorder id="observation" type={"description"} value={formData.observation ?? ""} />
+            <OrderInput name="observation" width="w-[100%]" noBorder id="observation" type={"description"} value={formData.observation} />
           </div>}
           <div className="w-full h-[40px] border-t-2 border-gray-600 relative h-[47px] flex place-items-center text-sm">
             <Input size="md" radius="none" className={`${discountActive ? "w-[50%]" : "w-[70%]"} px-2 flex bg-transparent border-r-2 border-gray-600`} />
@@ -360,7 +208,7 @@ export default function Home() {
                     <SelectItem key={item.key}>{item.value}</SelectItem>
                   ))}
                 </Select>
-                <OrderInput name={discountType} width="w-[30%]" id="discount" type={"description"} value={formData.discount ?? ""} discount={setDiscount} />
+                <OrderInput name={discountType} width="w-[30%]" id="discount" type={"description"} value={formData.discount} discount={setDiscount} />
               </div>
             }
             <div className={`flex m-auto gap-2 relative ${discountActive ? "absolute w-[17.6%] right-[6.6%]" : "w-[20%]"}`}>
@@ -382,7 +230,7 @@ export default function Home() {
           <Button className="w-[50px] min-w-2 h-[50px] bg-gray-400" radius="full" onPress={() => setDiscountActive(!discountActive)} aria-labelledby="Add discount area" >
             <MdDiscount color="white" className="w-[30px] h-[30px]" />
           </Button>
-          <Button className="w-[50px] min-w-2 h-[50px] bg-red-400 opacity-70 p-0" onPress={() => clear()} radius="full" aria-labelledby="Clear order" >
+          <Button className="w-[50px] min-w-2 h-[50px] bg-red-400 opacity-70 p-0" onPress={() => handleClear()} radius="full" aria-labelledby="Clear order" >
             <CgClose color="white" className="w-[23px] h-[23px]" />
           </Button>
         </div>

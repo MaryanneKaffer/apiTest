@@ -6,7 +6,6 @@ import {
   ModalFooter,
 } from "@heroui/modal";
 import { Button } from "@heroui/button";
-import { useState } from "react";
 
 export default function InfoModal({
   order,
@@ -71,16 +70,12 @@ export default function InfoModal({
               {Object.entries(order).map(([key, value]) => {
                 if (key === "createdAt" || value === null) { return null }
                 return (
-                  <>
-                    {key.includes("code") && (
-                      <>
-                        <p key={"bags"}>Bag {key === "code" ? 1 : key === "code2" ? 2 : key === "code3" ? 3  : key === "code4" && 4 }</p>
-                      </>
-                    )}
+                  <div key={key}>
+                    {key.includes("code") && (<p key={"bags"}>Bag {key === "code" ? 1 : key === "code2" ? 2 : key === "code3" ? 3 : key === "code4" && 4}</p>)}
                     <p className="text-md" key={key}>
-                      {labels[key] || key}: {key.includes("cost") && "$"}{String(value)}
+                      {labels[key] || key}: {key.includes("cost") && "$ "}{String(value)}
                     </p>
-                  </>
+                  </div>
                 );
               })}
             </ModalBody>
